@@ -1,11 +1,11 @@
 package ru.sem.clientbase.client.dto;
 
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientResponseDto {
+public class ClientDto {
 
     Long id;
 
@@ -28,6 +28,4 @@ public class ClientResponseDto {
     Long organizationId;
 
     String email;
-
-    Set<Long> transportList;
 }

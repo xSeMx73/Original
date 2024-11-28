@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 
-
 @Getter
 @Setter
 @Builder
@@ -22,11 +21,11 @@ public class ClientDto {
 
     String clientLastName;
     @NotBlank
-   String clientNickName;
+    String clientNickName;
 
-   Integer phone;
+    Integer phone;
 
-   Long organizationId;
-   @Email
-   String email;
+    Long organizationId;
+    @Email
+    String email;
 }
