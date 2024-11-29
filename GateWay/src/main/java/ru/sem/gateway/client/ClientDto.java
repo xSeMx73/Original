@@ -17,11 +17,11 @@ public class ClientDto {
 
     Long id;
 
-    String clientName;
+    String name;
 
-    String clientLastName;
+    String lastName;
     @NotBlank
-    String clientNickName;
+    String nickName;
 
     Integer phone;
 

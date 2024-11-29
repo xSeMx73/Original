@@ -21,6 +21,8 @@ public class Transport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String brandName;
+
     String model;
 
     String addInform;
@@ -31,4 +33,7 @@ public class Transport {
     @JoinColumn(name = "owner_id")
     Client owner;
 
+    String gosNumber;
+
+    Integer year;
 }

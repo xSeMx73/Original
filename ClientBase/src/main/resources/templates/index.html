@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поле ввода</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #007BFF; /* Цвет границы при фокусировке */
+        }
+        .input-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Вас приветствует база данных клиентов сети магазинов Оригинал</h1>
+<form action="http://192.168.1.201:8080/clients" method="GET">
+    <div class="input-container">
+        <label for="name" class="input-label">Поиск клиента:</label>
+        <input type="text" id="name" name="query" class="input-field" required>
+    </div>
+    <div class="input-container">
+        <label for="email" class="input-label">Поиск организации:</label>
+        <input type="email" id="email" name="email" class="input-field">
+    </div>
+    <button type="submit" class="submit-button">Отправить</button>
+</form>
+
+</body>
+</html>

@@ -1,10 +1,12 @@
 package ru.sem.clientbase.client.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.sem.clientbase.transport.dto.TransportResponseDto;
+import ru.sem.clientbase.transport.model.Transport;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,17 +19,15 @@ public class ClientResponseDto {
 
     Long id;
 
-    String clientName;
+    String name;
 
-    String clientLastName;
+    String lastName;
 
-    String clientNickName;
+    String nickName;
 
-    Integer phone;
-
-    Long organizationId;
+    Long phone;
 
     String email;
 
-    Set<Long> transportList;
+    List<TransportResponseDto> transportList;
 }

@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import ru.sem.clientbase.transport.model.Transport;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,18 +25,17 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String clientName;
+    String name;
 
-    String clientLastName;
+    String lastName;
 
-    String clientNickName;
+    String nickName;
 
-    Integer phone;
-
-    Long organizationId;
+    Long phone;
 
     String email;
 
-    Set<Long> transportList;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    List<Transport> transportList;
 
 }

@@ -17,15 +17,13 @@ public class ClientDto {
 
     Long id;
 
-    String clientName;
+    String name;
 
-    String clientLastName;
+    String lastName;
 
-    String clientNickName;
+    String nickName;
 
-    Integer phone;
-
-    Long organizationId;
+    Long phone;
 
     String email;
 }
