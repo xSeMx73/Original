@@ -1,7 +1,8 @@
-package ru.sem.clientbase.transport.model;
+package ru.sem.clientbase.transport.model.converter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import ru.sem.clientbase.transport.dto.TransportResponseDto;
+import ru.sem.clientbase.transport.model.Transport;
 
 
 @Component

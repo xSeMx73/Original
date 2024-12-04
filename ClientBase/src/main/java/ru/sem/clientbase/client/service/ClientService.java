@@ -1,6 +1,6 @@
 package ru.sem.clientbase.client.service;
 
-import lombok.NoArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
@@ -17,7 +17,7 @@ public class ClientService {
     @Qualifier("mvcConversionService")
     private final ConversionService converter;
 
-    public ClientResponseDto getClient(String query){
+    public ClientResponseDto getClient(String query) {
         if (query != null) {
            return converter.convert(clientRepository.findByQuery(query), ClientResponseDto.class);
         } else {

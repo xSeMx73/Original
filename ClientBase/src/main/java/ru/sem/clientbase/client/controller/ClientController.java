@@ -9,10 +9,14 @@ import ru.sem.clientbase.client.dto.ClientDto;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
 import ru.sem.clientbase.client.service.ClientService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/clients")
+@CrossOrigin(origins = "http://192.168.1.201:8080")
 public class ClientController {
 
    private final ClientService clientService;
@@ -24,9 +28,12 @@ public class ClientController {
     }
 
     @GetMapping
-    public ClientResponseDto getClient(@RequestParam String query){
+    public List<ClientResponseDto> getClient(@RequestParam String query){
         log.info("Запрос клиента с параметром {}", query);
-        return clientService.getClient(query);
+        List<ClientResponseDto> clients = new ArrayList<>();
+               clients.add(clientService.getClient(query));
+        log.info("Возвращаю данные запроса {}", clients);
+        return clients;
 
     }
 

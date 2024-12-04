@@ -3,6 +3,7 @@ package ru.sem.clientbase.transport.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+@ToString
 @Getter
 @Setter
 @Builder

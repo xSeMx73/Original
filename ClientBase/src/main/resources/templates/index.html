@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поле ввода</title>
+    <title>Список клиентов и их транспортных средств</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             padding: 50px;
         }
+        h1 {
+            text-align: center;
+        }
         .input-container {
-            margin: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
         }
         .input-field {
-            width: 100%;
             padding: 10px;
+            font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
-        }
-        .input-field:focus {
-            outline: none;
-            border-color: #007BFF; /* Цвет границы при фокусировке */
-        }
-        .input-label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            width: 300px;
         }
         .submit-button {
             background-color: #007BFF;
@@ -37,26 +32,190 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin-left: 10px;
         }
         .submit-button:hover {
             background-color: #0056b3;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .add-transport-btn {
+            background-color: green; /* Цвет кнопки */
+            color: white;            /* Цвет текста */
+            border: none;           /* Убираем границу */
+            border-radius: 5px;    /* Скругление углов */
+            cursor: pointer;        /* Курсор указателя при наведении */
+            padding: 5px 10px;     /* Отступы */
+        }
+        .add-transport-btn:hover {
+            background-color: darkgreen; /* Изменение цвета при наведении */
+        }
     </style>
+    <script>
+
+        async function fetchClients() {
+            console.log("Вход в метод")
+            const query = document.getElementById('name').value;
+            console.log(query)
+            const response = await fetch('http://localhost:8080/clients?query=' + encodeURIComponent(query)); // Укажите здесь правильный путь к вашему API
+            const data = await response.json();
+            console.log(data)
+            displayResults(data);
+            console.log(data)
+        }
+
+        function displayResults(data) {
+            const tableBody = document.getElementById('results-body');
+            tableBody.innerHTML = ''; // Очистка предыдущих результатов
+
+            data.forEach(client => {
+                const row = document.createElement('tr');
+
+                // Создание ячейки для кнопки " + "
+                const cell = document.createElement('td');
+                const addTransportBtn = document.createElement('button');
+                addTransportBtn.textContent = 'добавить';
+                addTransportBtn.classList.add('add-transport-btn'); // Добавляем класс для стилизации при желании
+
+                // Добавление обработчика события клика на кнопку
+                addTransportBtn.addEventListener('click', () => {
+                    // Здесь нужно указать эндпоинт и тело запроса
+                    const endpoint = 'http://localhost:8080/clients'; // Пример эндпоинта, замените на свой
+                    const transportData = {
+                        clientId: client.id, // Предполагаем, что у вас есть id клиента
+                        transportationDetails: {}, // Заполните, если есть данные о транспорте
+                    };
+
+                    fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(transportData),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Обработайте ответ и обновите интерфейс по необходимости
+                            console.log('Успех:', data);
+                        })
+                        .catch((error) => {
+                            console.error('Ошибка:', error);
+                        });
+                });
+
+                // Добавление кнопки в ячейку
+                cell.appendChild(addTransportBtn);
+                row.appendChild(cell);  // Теперь добавляем ячейку с кнопкой в строку
+
+                // Создание ячеек для информации о клиенте
+                if (client.name != null) {
+                    const clientName = document.createElement('td');
+                    clientName.textContent = client.name;
+                    row.appendChild(clientName);
+                }
+
+                if (client.lastName != null) {
+                    const clientLastName = document.createElement('td');
+                    clientLastName.textContent = client.lastName;
+                    row.appendChild(clientLastName);
+                }
+
+                if (client.nickName != null) {
+                    const clientNick = document.createElement('td');
+                    clientNick.textContent = client.nickName;
+                    row.appendChild(clientNick);
+                }
+
+                if (client.phone != null) {
+                    const phone = document.createElement('td');
+                    phone.textContent = client.phone;
+                    row.appendChild(phone);
+                }
+
+                if (client.email != null) {
+                    const email = document.createElement('td');
+                    email.textContent = client.email;
+                    row.appendChild(email);
+                }
+
+                tableBody.appendChild(row);
+
+                // Теперь добавим списки транспортных средств
+                client.transportList.forEach(transport => {
+                    const transportRow = document.createElement('tr');
+
+                    if (transport.brandName != null) {
+                        const brand = document.createElement('td');
+                        brand.textContent = transport.brandName; // Тип транспортного средства
+                        transportRow.appendChild(brand);
+                    }
+
+                    if (transport.model != null) {
+                        const model = document.createElement('td');
+                        model.textContent = transport.model; // Тип транспортного средства
+                        transportRow.appendChild(model);
+                    }
+
+                    if (transport.vin != null) {
+                        const vin = document.createElement('td');
+                        vin.textContent = transport.vin;
+                        transportRow.appendChild(vin);
+                    }
+
+                    if (transport.gosNumber != null) {
+                        const gosNumber = document.createElement('td');
+                        gosNumber.textContent = transport.gosNumber;
+                        transportRow.appendChild(gosNumber);
+                    }
+
+                    if (transport.year != null) {
+                        const year = document.createElement('td');
+                        year.textContent = transport.year;
+                        transportRow.appendChild(year);
+                    }
+
+                    if (transport.addInform != null) {
+                        const addInf = document.createElement('td');
+                        addInf.textContent = transport.addInform;
+                        transportRow.appendChild(addInf);
+                    }
+
+                    // Добавление новой строки транспортного средства в таблицу
+                    tableBody.appendChild(transportRow);
+                });
+            });
+        }
+    </script>
 </head>
 <body>
+<h1>Поиск клиентов</h1>
+<div class="input-container">
+    <label for="name" class="input-label">Поиск клиента:</label>
+    <input type="text" id="name" name="query" class="input-field" required>
+    <button class="submit-button" onclick="fetchClients()">Поиск</button>
+</div>
 
-<h1>Вас приветствует база данных клиентов сети магазинов Оригинал</h1>
-<form action="http://192.168.1.201:8080/clients" method="GET">
-    <div class="input-container">
-        <label for="name" class="input-label">Поиск клиента:</label>
-        <input type="text" id="name" name="query" class="input-field" required>
-    </div>
-    <div class="input-container">
-        <label for="email" class="input-label">Поиск организации:</label>
-        <input type="email" id="email" name="email" class="input-field">
-    </div>
-    <button type="submit" class="submit-button">Отправить</button>
-</form>
+<table>
+    <thead>
+    <tr>
 
+    </tr>
+    </thead>
+    <tbody id="results-body">
+    <!-- Результаты поиска будут помещены сюда -->
+    </tbody>
+</table>
 </body>
 </html>
