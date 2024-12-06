@@ -36,4 +36,14 @@ public class TransportService {
         }
         return transportDto;
     }
+
+    public void deleteTransport(Long id) {
+        getForId(id);
+        transportRepository.deleteById(id);
+    }
+
+    public Transport getForId(Long id){
+        return transportRepository.findById(id).orElseThrow(() -> new NotFoundException("Транспорт с ID: " + id + " не найден"));
+    }
+
 }

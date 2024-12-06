@@ -31,4 +31,10 @@ public class TransportController {
     }
 
 
+    @DeleteMapping("/{transportToDeleteId}")
+    public void deleteTransport (@PathVariable(name = "transportToDeleteId") Long id){
+        log.info("Попытка удаления транспорта с ID: {}", id);
+        transportService.deleteTransport(id);
+    }
+
 }

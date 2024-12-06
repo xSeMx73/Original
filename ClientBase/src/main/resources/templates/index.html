@@ -62,6 +62,17 @@
         .add-transport-btn:hover {
             background-color: darkgreen;
         }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
         /* Стили для модального окна */
         .modal {
             display: none;
@@ -111,7 +122,7 @@
 
                 const cell = document.createElement('td');
                 const addTransportBtn = document.createElement('button');
-                addTransportBtn.textContent = 'добавить';
+                addTransportBtn.textContent = 'добавить транспорт';
                 addTransportBtn.classList.add('add-transport-btn');
 
                 addTransportBtn.addEventListener('click', () => {
@@ -156,6 +167,17 @@
                 client.transportList.forEach(transport => {
                     const transportRow = document.createElement('tr');
 
+                    // Кнопка для удаления транспорта
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Удалить';
+                    deleteBtn.classList.add('delete-btn');
+                    deleteBtn.addEventListener('click', () => {
+                        confirmDelete(transport.id);
+                    });
+                    const deleteCell = document.createElement('td');
+                    deleteCell.appendChild(deleteBtn);
+                    transportRow.appendChild(deleteCell); // Добавляем ячейку с кнопкой удаления в начало строки
+
                     if (transport.brandName != null) {
                         const brand = document.createElement('td');
                         brand.textContent = transport.brandName;
@@ -197,6 +219,31 @@
             });
         }
 
+        // Функция для подтверждения удаления
+        let transportToDeleteId;
+
+        function confirmDelete(transportId) {
+            transportToDeleteId = transportId; // Сохраняем ID удаляемого транспорта
+            document.getElementById('confirm-modal').style.display = 'block';
+        }
+
+        function cancelDelete() {
+            transportToDeleteId = null;
+            document.getElementById('confirm-modal').style.display = 'none';
+        }
+
+        async function executeDelete() {
+            console.log(transportToDeleteId);
+            if (transportToDeleteId) {
+                await fetch(`http://localhost:8080/transport/${transportToDeleteId}`, {
+                    method: 'DELETE',
+                });
+                transportToDeleteId = null;
+                document.getElementById('confirm-modal').style.display = 'none';
+                fetchClients(); // Обновляем список клиентов после удаления
+            }
+        }
+
         function openModal(clientId) {
             document.getElementById('modal').style.display = 'block';
             document.getElementById('client-id').value = clientId; // Сохраняем ID клиента
@@ -227,7 +274,6 @@
             console.log(transportData);
             console.log(clientId);
 
-
             fetch('http://localhost:8080/transport', {
                 method: 'POST',
                 headers: {
@@ -251,9 +297,9 @@
 <body>
 <h1>Поиск клиентов</h1>
 <div class="input-container">
+    <button class="submit-button" onclick="fetchClients()">Поиск</button>
     <label for="name" class="input-label">Поиск клиента:</label>
     <input type="text" id="name" name="query" class="input-field" required>
-    <button class="submit-button" onclick="fetchClients()">Поиск</button>
 </div>
 
 <table>
@@ -266,7 +312,7 @@
     </tbody>
 </table>
 
-<!-- Модальное окно -->
+<!-- Модальное окно для добавления транспорта -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -285,6 +331,15 @@
         <label for="additional-info">Доп. информация:</label>
         <input type="text" id="additional-info" class="input-field"><br><br>
         <button class="submit-button" onclick="submitTransport()">Добавить транспорт</button>
+    </div>
+</div>
+
+<!-- Модальное окно для подтверждения удаления -->
+<div id="confirm-modal" class="modal">
+    <div class="modal-content">
+        <p>Вы действительно хотите удалить это транспортное средство?</p>
+        <button class="submit-button" onclick="executeDelete()">Да</button>
+        <button class="submit-button" onclick="cancelDelete()">Нет</button>
     </div>
 </div>
 
