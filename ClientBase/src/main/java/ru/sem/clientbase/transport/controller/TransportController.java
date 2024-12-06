@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.sem.clientbase.client.service.ClientService;
 import ru.sem.clientbase.transport.dto.TransportResponseDto;
+import ru.sem.clientbase.transport.service.TransportService;
 
 
 @Slf4j
@@ -18,13 +19,16 @@ import ru.sem.clientbase.transport.dto.TransportResponseDto;
 @CrossOrigin(origins = "http://192.168.1.201:8080")
 public class TransportController {
 
-    private final ClientService clientService;
+    private final TransportService transportService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransportResponseDto> createTransport(@RequestBody TransportResponseDto transport, RequestParam clientId) {
-        log.info("Добавление транспорта {} клиенту с ID : {}", transport, clientId );
-
-        return null;
+    public ResponseEntity<TransportResponseDto> createTransport(@RequestBody TransportResponseDto transportData, @RequestHeader(name = "id") Long id) {
+        log.info("Попытка добавления транспорта {} клиенту с ID : {}", transportData, id );
+        TransportResponseDto transportDto = transportService.addTransport(transportData, id);
+        log.info("Успешное добавление транспорта {} клиенту с ID : {}", transportData, id );
+        return ResponseEntity.status(HttpStatus.CREATED).body(transportDto);
     }
+
+
 }

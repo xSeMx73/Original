@@ -10,6 +10,7 @@ public class TransportToTransportResponseDto implements Converter<Transport, Tra
     @Override
     public TransportResponseDto convert(Transport source) {
         return TransportResponseDto.builder()
+                .id(source.getId())
                 .brandName(source.getBrandName())
                 .model(source.getModel())
                 .addInform(source.getAddInform())

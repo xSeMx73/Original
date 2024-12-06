@@ -52,74 +52,75 @@
             color: white;
         }
         .add-transport-btn {
-            background-color: green; /* Цвет кнопки */
-            color: white;            /* Цвет текста */
-            border: none;           /* Убираем границу */
-            border-radius: 5px;    /* Скругление углов */
-            cursor: pointer;        /* Курсор указателя при наведении */
-            padding: 5px 10px;     /* Отступы */
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
         }
         .add-transport-btn:hover {
-            background-color: darkgreen; /* Изменение цвета при наведении */
+            background-color: darkgreen;
+        }
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
     <script>
-
         async function fetchClients() {
-            console.log("Вход в метод")
             const query = document.getElementById('name').value;
-            console.log(query)
-            const response = await fetch('http://localhost:8080/clients?query=' + encodeURIComponent(query)); // Укажите здесь правильный путь к вашему API
+            const response = await fetch('http://localhost:8080/clients?query=' + encodeURIComponent(query));
             const data = await response.json();
-            console.log(data)
             displayResults(data);
-            console.log(data)
         }
 
         function displayResults(data) {
             const tableBody = document.getElementById('results-body');
-            tableBody.innerHTML = ''; // Очистка предыдущих результатов
+            tableBody.innerHTML = '';
 
             data.forEach(client => {
                 const row = document.createElement('tr');
 
-                // Создание ячейки для кнопки " + "
                 const cell = document.createElement('td');
                 const addTransportBtn = document.createElement('button');
                 addTransportBtn.textContent = 'добавить';
-                addTransportBtn.classList.add('add-transport-btn'); // Добавляем класс для стилизации при желании
+                addTransportBtn.classList.add('add-transport-btn');
 
-                // Добавление обработчика события клика на кнопку
                 addTransportBtn.addEventListener('click', () => {
-                    // Здесь нужно указать эндпоинт и тело запроса
-                    const endpoint = 'http://localhost:8080/clients'; // Пример эндпоинта, замените на свой
-                    const transportData = {
-                        clientId: client.id, // Предполагаем, что у вас есть id клиента
-                        transportationDetails: {}, // Заполните, если есть данные о транспорте
-                    };
-
-                    fetch(endpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(transportData),
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Обработайте ответ и обновите интерфейс по необходимости
-                            console.log('Успех:', data);
-                        })
-                        .catch((error) => {
-                            console.error('Ошибка:', error);
-                        });
+                    openModal(client.id); // Передаем ID клиента
                 });
 
-                // Добавление кнопки в ячейку
                 cell.appendChild(addTransportBtn);
-                row.appendChild(cell);  // Теперь добавляем ячейку с кнопкой в строку
+                row.appendChild(cell);
 
-                // Создание ячеек для информации о клиенте
                 if (client.name != null) {
                     const clientName = document.createElement('td');
                     clientName.textContent = client.name;
@@ -152,19 +153,18 @@
 
                 tableBody.appendChild(row);
 
-                // Теперь добавим списки транспортных средств
                 client.transportList.forEach(transport => {
                     const transportRow = document.createElement('tr');
 
                     if (transport.brandName != null) {
                         const brand = document.createElement('td');
-                        brand.textContent = transport.brandName; // Тип транспортного средства
+                        brand.textContent = transport.brandName;
                         transportRow.appendChild(brand);
                     }
 
                     if (transport.model != null) {
                         const model = document.createElement('td');
-                        model.textContent = transport.model; // Тип транспортного средства
+                        model.textContent = transport.model;
                         transportRow.appendChild(model);
                     }
 
@@ -192,10 +192,59 @@
                         transportRow.appendChild(addInf);
                     }
 
-                    // Добавление новой строки транспортного средства в таблицу
                     tableBody.appendChild(transportRow);
                 });
             });
+        }
+
+        function openModal(clientId) {
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('client-id').value = clientId; // Сохраняем ID клиента
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function submitTransport() {
+            const clientId = document.getElementById('client-id').value;
+            const brandName = document.getElementById('brand-name').value;
+            const model = document.getElementById('model').value;
+            const vin = document.getElementById('vin').value;
+            const gosNumber = document.getElementById('gos-number').value;
+            const year = document.getElementById('year').value;
+            const addInform = document.getElementById('additional-info').value;
+
+            const transportData = {
+                brandName,
+                model,
+                vin,
+                gosNumber,
+                year,
+                addInform
+            };
+
+            console.log(transportData);
+            console.log(clientId);
+
+
+            fetch('http://localhost:8080/transport', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'id': clientId
+                },
+                body: JSON.stringify(transportData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Успех:', data);
+                    closeModal();
+                    fetchClients(); // Обновляем список клиентов после добавления
+                })
+                .catch((error) => {
+                    console.error('Ошибка:', error);
+                });
         }
     </script>
 </head>
@@ -210,12 +259,34 @@
 <table>
     <thead>
     <tr>
-
     </tr>
     </thead>
     <tbody id="results-body">
     <!-- Результаты поиска будут помещены сюда -->
     </tbody>
 </table>
+
+<!-- Модальное окно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Добавить транспортное средство</h2>
+        <input type="hidden" id="client-id">
+        <label for="brand-name">Марка:</label>
+        <input type="text" id="brand-name" class="input-field" required><br>
+        <label for="model">Модель:</label>
+        <input type="text" id="model" class="input-field" required><br>
+        <label for="vin">VIN:</label>
+        <input type="text" id="vin" class="input-field"><br>
+        <label for="gos-number">Гос. номер:</label>
+        <input type="text" id="gos-number" class="input-field"><br>
+        <label for="year">Год выпуска:</label>
+        <input type="number" id="year" class="input-field" min="1900" max="2100"><br>
+        <label for="additional-info">Доп. информация:</label>
+        <input type="text" id="additional-info" class="input-field"><br><br>
+        <button class="submit-button" onclick="submitTransport()">Добавить транспорт</button>
+    </div>
+</div>
+
 </body>
 </html>
