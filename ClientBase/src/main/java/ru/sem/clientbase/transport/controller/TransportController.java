@@ -6,8 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import ru.sem.clientbase.client.service.ClientService;
 import ru.sem.clientbase.transport.dto.TransportResponseDto;
 import ru.sem.clientbase.transport.service.TransportService;
 

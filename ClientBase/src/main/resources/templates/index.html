@@ -108,7 +108,7 @@
     <script>
         async function fetchClients() {
             const query = document.getElementById('name').value;
-            const response = await fetch('http://localhost:8080/clients?query=' + encodeURIComponent(query));
+            const response = await fetch('http://192.168.1.201:8080/clients?query=' + encodeURIComponent(query));
             const data = await response.json();
             displayResults(data);
         }
@@ -126,7 +126,7 @@
                 addTransportBtn.classList.add('add-transport-btn');
 
                 addTransportBtn.addEventListener('click', () => {
-                    openModal(client.id); // Передаем ID клиента
+                    openTransportModal(client.id); // Передаем ID клиента
                 });
 
                 cell.appendChild(addTransportBtn);
@@ -233,9 +233,8 @@
         }
 
         async function executeDelete() {
-            console.log(transportToDeleteId);
             if (transportToDeleteId) {
-                await fetch(`http://localhost:8080/transport/${transportToDeleteId}`, {
+                await fetch(`http://192.168.1.201:8080/transport/${transportToDeleteId}`, {
                     method: 'DELETE',
                 });
                 transportToDeleteId = null;
@@ -244,7 +243,7 @@
             }
         }
 
-        function openModal(clientId) {
+        function openTransportModal(clientId) {
             document.getElementById('modal').style.display = 'block';
             document.getElementById('client-id').value = clientId; // Сохраняем ID клиента
         }
@@ -271,10 +270,7 @@
                 addInform
             };
 
-            console.log(transportData);
-            console.log(clientId);
-
-            fetch('http://localhost:8080/transport', {
+            fetch('http://192.168.1.201:8080/transport', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -284,22 +280,59 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Успех:', data);
                     closeModal();
                     fetchClients(); // Обновляем список клиентов после добавления
                 })
-                .catch((error) => {
-                    console.error('Ошибка:', error);
-                });
+                .catch((error) => console.error('Ошибка:', error));
+        }
+
+        // Функция для открытия модального окна для добавления клиента
+        function openAddClientModal() {
+            document.getElementById('add-client-modal').style.display = 'block';
+        }
+
+        function closeAddClientModal() {
+            document.getElementById('add-client-modal').style.display = 'none';
+        }
+
+        function submitClient() {
+            const name = document.getElementById('client-name').value;
+            const lastName = document.getElementById('client-lastname').value;
+            const nickName = document.getElementById('client-nickname').value;
+            const phone = document.getElementById('client-phone').value;
+            const email = document.getElementById('client-email').value;
+
+            const clientData = {
+                name,
+                lastName,
+                nickName,
+                phone,
+                email
+            };
+
+            fetch('http://localhost:8080/clients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(clientData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    closeAddClientModal();
+                    fetchClients(); // Обновляем список клиентов после добавления
+                })
+                .catch((error) => console.error('Ошибка:', error));
         }
     </script>
 </head>
 <body>
-<h1>Поиск клиентов</h1>
+<h1>Вас приветствует база данных клиентов сети магазинов Оригинал</h1>
 <div class="input-container">
     <button class="submit-button" onclick="fetchClients()">Поиск</button>
     <label for="name" class="input-label">Поиск клиента:</label>
     <input type="text" id="name" name="query" class="input-field" required>
+    <button class="submit-button" onclick="openAddClientModal()">Добавить клиента</button>
 </div>
 
 <table>
@@ -340,6 +373,25 @@
         <p>Вы действительно хотите удалить это транспортное средство?</p>
         <button class="submit-button" onclick="executeDelete()">Да</button>
         <button class="submit-button" onclick="cancelDelete()">Нет</button>
+    </div>
+</div>
+
+<!-- Модальное окно для добавления клиента -->
+<div id="add-client-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAddClientModal()">&times;</span>
+        <h2>Добавить клиента</h2>
+        <label for="client-name">Имя:</label>
+        <input type="text" id="client-name" class="input-field" required><br>
+        <label for="client-lastname">Фамилия:</label>
+        <input type="text" id="client-lastname" class="input-field" required><br>
+        <label for="client-nickname">Псевдоним:</label>
+        <input type="text" id="client-nickname" class="input-field"><br>
+        <label for="client-phone">Телефон:</label>
+        <input type="tel" id="client-phone" class="input-field" required><br>
+        <label for="client-email">Электронная почта:</label>
+        <input type="email" id="client-email" class="input-field" required><br><br>
+        <button class="submit-button" onclick="submitClient()">Добавить клиента</button>
     </div>
 </div>
 

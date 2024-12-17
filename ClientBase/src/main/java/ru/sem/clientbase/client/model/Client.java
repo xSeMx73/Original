@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import ru.sem.clientbase.transport.model.Transport;
 
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
