@@ -6,19 +6,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
+import static ru.sem.Config.BASE_URL;
 
-import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://192.168.1.201:9090")
+@CrossOrigin(origins = BASE_URL + ":9090")
 @RequestMapping(path = "/clients")
 public class ClientController {
 
   private final ClientWebClient webClient;
 
-    public ClientDto createClient(@RequestBody ClientDto clientDto ) {
+  @PostMapping
+  public ClientDto createClient(@RequestBody ClientDto clientDto ) {
+    log.info("гейтвей, создание клиента в контроллере {} ", clientDto);
 
       return webClient.createClient(clientDto);
 

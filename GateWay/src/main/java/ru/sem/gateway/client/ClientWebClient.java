@@ -9,10 +9,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import ru.sem.clientbase.client.dto.ClientResponseDto;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+
+
+import static ru.sem.Config.BASE_URL;
 
 @Component
 public class ClientWebClient {
@@ -21,7 +24,7 @@ public class ClientWebClient {
 
     public String url;
 
-    public ClientWebClient(@Value("${clientBase.url:http://192.168.1.201:8080}") String url) {
+    public ClientWebClient(@Value("${clientBase.url:" + BASE_URL + ":8080}") String url) {
         this.url = url;
         webClient = WebClient.create(url);
     }
@@ -45,10 +48,10 @@ public class ClientWebClient {
     }
 
     public Flux<ClientResponseDto> getClient(String request) {
-        // Кодируем строку запроса
+
         String encodedRequest = UriUtils.encodeQuery(request, StandardCharsets.UTF_8);
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString("http://192.168.1.201:8080/clients");
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(BASE_URL + ":8080/clients");
         uriBuilder.queryParam("query", encodedRequest);  // Используем закодированную строку запроса
 
         System.out.println("Мы в getClient в webcliente");

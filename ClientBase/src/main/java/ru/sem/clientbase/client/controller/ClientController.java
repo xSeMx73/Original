@@ -1,5 +1,6 @@
 package ru.sem.clientbase.client.controller;
 
+import ru.sem.gateway.Configurations;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/clients")
-@CrossOrigin(origins = "http://192.168.1.201:8080")
+@CrossOrigin(origins = Config.BASE_URL + ":8080")
 public class ClientController {
+
 
    private final ClientService clientService;
 
