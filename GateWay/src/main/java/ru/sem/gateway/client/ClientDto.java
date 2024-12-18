@@ -25,7 +25,6 @@ public class ClientDto {
 
     Integer phone;
 
-    Long organizationId;
     @Email
     String email;
 }

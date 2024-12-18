@@ -6,8 +6,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriUtils;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Component
 public class ClientWebClient {
@@ -16,7 +21,7 @@ public class ClientWebClient {
 
     public String url;
 
-    public ClientWebClient(@Value("${clientBase.url:http://localhost:9090}") String url) {
+    public ClientWebClient(@Value("${clientBase.url:http://192.168.1.201:8080}") String url) {
         this.url = url;
         webClient = WebClient.create(url);
     }
@@ -39,22 +44,20 @@ public class ClientWebClient {
                 .block();
     }
 
-    public ClientResponseDto getClient (String request) {
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString("http://clientBase:9090/client");
-        uriBuilder.queryParam("uri", request);
-        return webClient
-                .get()
+    public Flux<ClientResponseDto> getClient(String request) {
+        // Кодируем строку запроса
+        String encodedRequest = UriUtils.encodeQuery(request, StandardCharsets.UTF_8);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString("http://192.168.1.201:8080/clients");
+        uriBuilder.queryParam("query", encodedRequest);  // Используем закодированную строку запроса
+
+        System.out.println("Мы в getClient в webcliente");
+        System.out.println(uriBuilder.build().toUri());
+
+        return webClient.get()
                 .uri(uriBuilder.build().toUri())
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().is5xxServerError()) {
-                        return Mono.error(new RuntimeException("Server Error"));
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.error(new RuntimeException("Client Error"));
-                    } else {
-                        return clientResponse.bodyToMono(ClientResponseDto.class);
-                    }
-                })
-                .block();
+                .retrieve() // Используйте retrieve() вместо exchangeToFlux()
+                .bodyToFlux(ClientResponseDto.class);
     }
 
 }

@@ -108,7 +108,7 @@
     <script>
         async function fetchClients() {
             const query = document.getElementById('name').value;
-            const response = await fetch('http://192.168.1.201:8080/clients?query=' + encodeURIComponent(query));
+            const response = await fetch('http://192.168.1.201:9090/clients?query=' + encodeURIComponent(query));
             const data = await response.json();
             displayResults(data);
         }
@@ -234,7 +234,7 @@
 
         async function executeDelete() {
             if (transportToDeleteId) {
-                await fetch(`http://192.168.1.201:8080/transport/${transportToDeleteId}`, {
+                await fetch(`http://192.168.1.201:9090/transport/${transportToDeleteId}`, {
                     method: 'DELETE',
                 });
                 transportToDeleteId = null;
@@ -270,7 +270,7 @@
                 addInform
             };
 
-            fetch('http://192.168.1.201:8080/transport', {
+            fetch('http://192.168.1.201:9090/transport', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -310,7 +310,7 @@
                 email
             };
 
-            fetch('http://localhost:8080/clients', {
+            fetch('http://localhost:9090/clients', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
