@@ -9,6 +9,7 @@ import ru.sem.clientbase.client.dto.ClientDto;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
 import ru.sem.clientbase.client.model.Client;
 import ru.sem.clientbase.client.repository.ClientRepository;
+import ru.sem.clientbase.exception.NotFoundException;
 import ru.sem.clientbase.exception.ParameterNotValidException;
 
 import java.util.List;
@@ -41,5 +42,13 @@ public class ClientService {
             client = clientRepository.save(client);
         }
         return converter.convert(client, ClientDto.class);
+    }
+
+    public ClientResponseDto getClientForId(Long id) {
+        return converter
+                .convert(clientRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new NotFoundException("Клиент с таким ID: " + id + " не найден")),ClientResponseDto.class);
     }
 }

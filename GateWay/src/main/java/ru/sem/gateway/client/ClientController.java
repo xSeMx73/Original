@@ -6,13 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
-import static ru.sem.Config.BASE_URL;
+
+import java.util.ArrayList;
 
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = BASE_URL + ":9090")
+@CrossOrigin(origins = "http://192.168.1.201:9090")
 @RequestMapping(path = "/clients")
 public class ClientController {
 
@@ -29,9 +30,19 @@ public class ClientController {
   @GetMapping
   public Flux<ClientResponseDto> getClient(@RequestParam String query) {
     log.info("гейтвей, получение клиента в контроллере по запросу {} ", query);
+    if (query.isEmpty()){
+      return null;
+    }
       return webClient.getClient(query);
   }
 
-
+  @GetMapping("/id/{id}")
+  public ClientResponseDto getClientForId(@PathVariable Long id) {
+    log.info("гейтвей, получение клиента в контроллере по ID {} ", id);
+    if (id == null) {
+      return null;
+    }
+    return webClient.getClientForId(id);
+  }
 
 }

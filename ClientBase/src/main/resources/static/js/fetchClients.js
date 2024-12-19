@@ -6,6 +6,13 @@ async function fetchClients() {
     const query = document.getElementById('name').value;
     const response = await fetch('http://192.168.1.201:9090/clients?query=' + encodeURIComponent(query));
     const data = await response.json();
-    console.log(data);
+    displayResults(data);
+}
+
+async function returnClientOuterCreate(id) {
+
+    const response = await fetch('http://192.168.1.201:9090/clients/id/' + encodeURIComponent(id));
+    const prom = await response.json();
+    const data = Array.of(prom);
     displayResults(data);
 }

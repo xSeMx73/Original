@@ -1,8 +1,10 @@
 package ru.sem.gateway.client;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,9 +16,7 @@ import ru.sem.clientbase.client.dto.ClientResponseDto;
 
 import java.nio.charset.StandardCharsets;
 
-
-import static ru.sem.Config.BASE_URL;
-
+@Getter
 @Component
 public class ClientWebClient {
 
@@ -24,15 +24,17 @@ public class ClientWebClient {
 
     public String url;
 
-    public ClientWebClient(@Value("${clientBase.url:" + BASE_URL + ":8080}") String url) {
+    public ClientWebClient(@Value("${clientBase.url:http://192.168.1.201:8080}") String url) {
         this.url = url;
         webClient = WebClient.create(url);
     }
 
     public ClientDto createClient(ClientDto clientDto) {
+        System.out.println("Мы в createClient в webclient");
+
         return webClient
                 .post()
-                .uri("/client")
+                .uri(url + "/clients")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(clientDto))
                 .exchangeToMono(clientResponse -> {
@@ -48,19 +50,31 @@ public class ClientWebClient {
     }
 
     public Flux<ClientResponseDto> getClient(String request) {
-
         String encodedRequest = UriUtils.encodeQuery(request, StandardCharsets.UTF_8);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(url + "/clients");
+        uriBuilder.queryParam("query", encodedRequest);
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(BASE_URL + ":8080/clients");
-        uriBuilder.queryParam("query", encodedRequest);  // Используем закодированную строку запроса
-
-        System.out.println("Мы в getClient в webcliente");
+        System.out.println("Мы в getClient в webClient");
         System.out.println(uriBuilder.build().toUri());
 
-        return webClient.get()
+        return webClient
+                .get()
                 .uri(uriBuilder.build().toUri())
-                .retrieve() // Используйте retrieve() вместо exchangeToFlux()
+                .retrieve()
                 .bodyToFlux(ClientResponseDto.class);
     }
 
+    public ClientResponseDto getClientForId(Long id) {
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(url + "/clients/id/" + id);
+
+        System.out.println("Мы в getClientForId в webClient");
+        System.out.println(uriBuilder.build().toUri());
+
+        return webClient
+                .get()
+                .uri(uriBuilder.build().toUri())
+                .retrieve()
+                .bodyToMono(ClientResponseDto.class)
+                .block();
+    }
 }

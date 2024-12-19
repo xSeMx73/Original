@@ -24,7 +24,7 @@ public class ClientDto {
     String name;
     @Size(min = 3 , max = 24)
     String lastName;
-    @Size(min = 3 , max = 24)
+    @Size(max = 24)
     String nickName;
 
     Long phone;

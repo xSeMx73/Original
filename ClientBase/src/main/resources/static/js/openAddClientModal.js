@@ -29,10 +29,21 @@ function submitClient() {
         },
         body: JSON.stringify(clientData),
     })
-        .then(response => response.json())
+        .then(response => {
+            // Проверка, что ответ успешен (статус 200-299)
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // Возврат JSON-ответа
+        })
         .then(data => {
-            closeAddClientModal();
-            fetchClients(); // Обновляем список клиентов после добавления
+            if (data.id) { // Проверяем, что ID клиента действительно присутствует
+                const clientId = data.id; // Сохраняем ID клиента
+                closeAddClientModal();
+                returnClientOuterCreate(clientId); // Передаем ID в функцию
+            } else {
+                console.error('ID клиента не найден в ответе:', data);
+            }
         })
         .catch((error) => console.error('Ошибка:', error));
 }

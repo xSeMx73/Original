@@ -2,7 +2,7 @@
  function displayResults(data) {
     const tableBody = document.getElementById('results-body');
     tableBody.innerHTML = '';
-
+    console.log(data)
     data.forEach(client => {
         const row = document.createElement('tr');
 

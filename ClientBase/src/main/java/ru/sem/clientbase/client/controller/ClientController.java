@@ -1,6 +1,5 @@
 package ru.sem.clientbase.client.controller;
 
-import static ru.sem.Config.BASE_URL;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +20,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/clients")
-@CrossOrigin(origins = BASE_URL + ":8080")
+@CrossOrigin(origins = "http://192.168.1.201:8080")
 public class ClientController {
 
 
    private final ClientService clientService;
 
     @GetMapping
-    public List<ClientResponseDto> getClient(@RequestParam String query){
+    public List<ClientResponseDto> getClient(@RequestParam String query) {
         query = UriUtils.decode(query, StandardCharsets.UTF_8);
         log.info("Запрос клиента с параметром {}", query);
         List<ClientResponseDto> clients = new ArrayList<>(clientService.getClient(query));
@@ -41,6 +40,17 @@ public class ClientController {
         log.info("Попытка создания нового клиента {}", clientDto);
         ClientDto client = clientService.createClient(clientDto);
         log.info("Клиент создан {}", client);
+        return client;
+    }
+
+    @GetMapping("/id/{id}")
+    public ClientResponseDto getClientForId(@PathVariable Long id) {
+        log.info("Получение клиента в контроллере базы по ID {} ", id);
+        if (id == null) {
+            return null;
+        }
+        ClientResponseDto client = clientService.getClientForId(id);
+        log.info("Возвращаю клиента по ID: {}", id);
         return client;
     }
 
