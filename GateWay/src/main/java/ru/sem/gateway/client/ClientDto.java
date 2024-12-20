@@ -23,7 +23,7 @@ public class ClientDto {
     @NotBlank
     String nickName;
 
-    Integer phone;
+    Long phone;
 
     @Email
     String email;

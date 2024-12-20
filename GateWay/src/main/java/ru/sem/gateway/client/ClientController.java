@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
 
-import java.util.ArrayList;
-
 
 @Slf4j
 @RestController
@@ -21,7 +19,7 @@ public class ClientController {
 
   @PostMapping
   public ClientDto createClient(@RequestBody ClientDto clientDto ) {
-    log.info("гейтвей, создание клиента в контроллере {} ", clientDto);
+    log.info("<---GATEWAY CLIENT CONTROLLER Создание клиента {} ", clientDto);
 
       return webClient.createClient(clientDto);
 
@@ -29,7 +27,7 @@ public class ClientController {
 
   @GetMapping
   public Flux<ClientResponseDto> getClient(@RequestParam String query) {
-    log.info("гейтвей, получение клиента в контроллере по запросу {} ", query);
+    log.info("<---GATEWAY CLIENT CONTROLLER Получение клиента по запросу {} ", query);
     if (query.isEmpty()){
       return null;
     }
@@ -38,11 +36,18 @@ public class ClientController {
 
   @GetMapping("/id/{id}")
   public ClientResponseDto getClientForId(@PathVariable Long id) {
-    log.info("гейтвей, получение клиента в контроллере по ID {} ", id);
+    log.info("<---GATEWAY CLIENT CONTROLLER Получение клиента по ID {} ", id);
     if (id == null) {
       return null;
     }
     return webClient.getClientForId(id);
+  }
+
+  @DeleteMapping("{clientToDeleteId}")
+  public void deleteClient(@PathVariable("clientToDeleteId") Long clientId) {
+    log.info("<---GATEWAY CLIENT CONTROLLER Попытка удаления клиента с ID: {}", clientId);
+    webClient.deleteClient(clientId);
+
   }
 
 }

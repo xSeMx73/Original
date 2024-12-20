@@ -6,6 +6,21 @@
     data.forEach(client => {
         const row = document.createElement('tr');
 
+
+        // Кнопка для удаления клиента
+        const deleteClientBtn = document.createElement('button');
+        deleteClientBtn.textContent = 'Удалить клиента';
+        deleteClientBtn.classList.add('delete-client-btn');
+
+        deleteClientBtn.addEventListener('click', () => {
+            confirmDeleteClient(client.id); // Передаем ID клиента для удаления
+        });
+
+        const deleteClientCell = document.createElement('td');
+        deleteClientCell.appendChild(deleteClientBtn);
+        row.appendChild(deleteClientCell); // Добавляем ячейку с кнопкой удаления клиента
+
+
         const cell = document.createElement('td');
         const addTransportBtn = document.createElement('button');
         addTransportBtn.textContent = 'добавить транспорт';
@@ -58,7 +73,7 @@
             deleteBtn.textContent = 'Удалить';
             deleteBtn.classList.add('delete-btn');
             deleteBtn.addEventListener('click', () => {
-                confirmDelete(transport.id);
+                confirmDelete(transport.id, client.id);
             });
             const deleteCell = document.createElement('td');
             deleteCell.appendChild(deleteBtn);

@@ -40,7 +40,7 @@ function submitClient() {
             if (data.id) { // Проверяем, что ID клиента действительно присутствует
                 const clientId = data.id; // Сохраняем ID клиента
                 closeAddClientModal();
-                returnClientOuterCreate(clientId); // Передаем ID в функцию
+                returnClientAfterCreate(clientId); // Передаем ID в функцию
             } else {
                 console.error('ID клиента не найден в ответе:', data);
             }

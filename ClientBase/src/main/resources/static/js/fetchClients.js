@@ -9,7 +9,7 @@ async function fetchClients() {
     displayResults(data);
 }
 
-async function returnClientOuterCreate(id) {
+async function returnClientAfterCreate(id) {
 
     const response = await fetch('http://192.168.1.201:9090/clients/id/' + encodeURIComponent(id));
     const prom = await response.json();

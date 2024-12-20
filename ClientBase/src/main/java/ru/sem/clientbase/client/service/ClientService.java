@@ -51,4 +51,13 @@ public class ClientService {
                 .orElseThrow(
                         () -> new NotFoundException("Клиент с таким ID: " + id + " не найден")),ClientResponseDto.class);
     }
+
+    public void deleteClient(Long id) {
+       Client client = validClient(id);
+       clientRepository.delete(client);
+    }
+
+    public Client validClient(Long id){
+      return clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Клиент не найден"));
+    }
 }

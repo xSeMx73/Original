@@ -36,7 +36,7 @@ function submitTransport() {
         .then(response => response.json())
         .then(data => {
             closeModal();
-            returnClientOuterCreate(clientId); // Обновляем список клиентов после добавления
+            returnClientAfterCreate(clientId); // Обновляем список клиентов после добавления
         })
         .catch((error) => console.error('Ошибка:', error));
 }

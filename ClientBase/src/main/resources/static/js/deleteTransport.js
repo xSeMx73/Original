@@ -1,8 +1,10 @@
 // Функция для подтверждения удаления
 let transportToDeleteId;
+let clientToUpdateId;
 
-function confirmDelete(transportId) {
+function confirmDelete(transportId, clientId) {
     transportToDeleteId = transportId; // Сохраняем ID удаляемого транспорта
+    clientToUpdateId = clientId;
     document.getElementById('confirm-modal').style.display = 'block';
 }
 
@@ -18,6 +20,6 @@ async function executeDelete() {
         });
         transportToDeleteId = null;
         document.getElementById('confirm-modal').style.display = 'none';
-        await fetchClients(); // Обновляем список клиентов после удаления
+        returnClientAfterCreate(clientToUpdateId); // Обновляем список клиентов после удаления
     }
 }

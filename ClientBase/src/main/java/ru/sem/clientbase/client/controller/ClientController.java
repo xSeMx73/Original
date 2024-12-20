@@ -4,13 +4,11 @@ package ru.sem.clientbase.client.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 import ru.sem.clientbase.client.dto.ClientDto;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
 import ru.sem.clientbase.client.service.ClientService;
-
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -54,4 +52,9 @@ public class ClientController {
         return client;
     }
 
+    @DeleteMapping
+    public void deleteClient(@RequestHeader(name = "clientId") Long id){
+        log.info("Удаление клиента с ID: {}", id);
+        clientService.deleteClient(id);
+    }
 }

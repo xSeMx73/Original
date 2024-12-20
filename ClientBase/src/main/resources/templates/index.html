@@ -110,6 +110,7 @@
      <script src="/static/js/fetchClients.js" defer></script>
      <script src="/static/js/openAddClientModal.js" defer></script>
      <script src="/static/js/transportModal.js" defer></script>
+     <script src="/static/js/deleteClient.js" defer></script>
    </head>
    <body>
    <h1>Вас приветствует база данных клиентов сети магазинов Оригинал</h1>
@@ -152,14 +153,24 @@
     </div>
 </div>
 
-<!-- Модальное окно для подтверждения удаления -->
-<div id="confirm-modal" class="modal">
+<!-- Модальное окно для подтверждения удаления клиента-->
+<div id="confirm-modal-deleteClient" class="modal">
     <div class="modal-content">
-        <p>Вы действительно хотите удалить это транспортное средство?</p>
-        <button class="submit-button" onclick="executeDelete()">Да</button>
-        <button class="submit-button" onclick="cancelDelete()">Нет</button>
+        <p>Вы действительно хотите удалить клиента?</p>
+        <button class="submit-button" onclick="deleteClient()">Да</button>
+        <button class="submit-button" onclick="cancelDeleteClient()">Нет</button>
     </div>
 </div>
+
+   <!-- Модальное окно для подтверждения удаления транспорта-->
+   <div id="confirm-modal" class="modal">
+       <div class="modal-content">
+           <p>Вы действительно хотите удалить это транспортное средство?</p>
+           <button class="submit-button" onclick="executeDelete()">Да</button>
+           <button class="submit-button" onclick="cancelDelete()">Нет</button>
+       </div>
+   </div>
+
 
 <!-- Модальное окно для добавления клиента -->
 <div id="add-client-modal" class="modal">

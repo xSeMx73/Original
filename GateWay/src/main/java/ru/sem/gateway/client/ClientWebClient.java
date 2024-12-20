@@ -1,27 +1,24 @@
 package ru.sem.gateway.client;
 
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import ru.sem.clientbase.client.dto.ClientResponseDto;
 
 import java.nio.charset.StandardCharsets;
 
-@Getter
+@Slf4j
 @Component
 public class ClientWebClient {
 
     private final WebClient webClient;
-
     public String url;
 
     public ClientWebClient(@Value("${clientBase.url:http://192.168.1.201:8080}") String url) {
@@ -30,8 +27,8 @@ public class ClientWebClient {
     }
 
     public ClientDto createClient(ClientDto clientDto) {
-        System.out.println("Мы в createClient в webclient");
 
+        log.info("<--- GATEWAY ClientWebClient Добавление клиента {}", clientDto);
         return webClient
                 .post()
                 .uri(url + "/clients")
@@ -50,12 +47,10 @@ public class ClientWebClient {
     }
 
     public Flux<ClientResponseDto> getClient(String request) {
+        log.info("<--- GATEWAY ClientWebClient Получение клиента по запросу {}", request);
         String encodedRequest = UriUtils.encodeQuery(request, StandardCharsets.UTF_8);
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(url + "/clients");
         uriBuilder.queryParam("query", encodedRequest);
-
-        System.out.println("Мы в getClient в webClient");
-        System.out.println(uriBuilder.build().toUri());
 
         return webClient
                 .get()
@@ -67,14 +62,24 @@ public class ClientWebClient {
     public ClientResponseDto getClientForId(Long id) {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(url + "/clients/id/" + id);
 
-        System.out.println("Мы в getClientForId в webClient");
-        System.out.println(uriBuilder.build().toUri());
+        log.info("<--- GATEWAY ClientWebClient Получение клиента по ID: {}", id);
 
         return webClient
                 .get()
                 .uri(uriBuilder.build().toUri())
                 .retrieve()
                 .bodyToMono(ClientResponseDto.class)
+                .block();
+    }
+
+    public void deleteClient(Long clientId) {
+        log.info("<--- GATEWAY ClientWebClient Удаление клиента по ID: {}", clientId);
+        webClient
+                .delete()
+                .uri(url + "/clients")
+                .header("clientId", String.valueOf(clientId))
+                .retrieve()
+                .bodyToMono(Void.class)
                 .block();
     }
 }
