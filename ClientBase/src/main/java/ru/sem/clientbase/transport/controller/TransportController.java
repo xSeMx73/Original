@@ -34,4 +34,14 @@ public class TransportController {
         log.info("Попытка удаления транспорта с ID: {}", id);
         transportService.deleteTransport(id);
     }
+
+    @PatchMapping
+    public TransportResponseDto updateTransport(@RequestBody TransportResponseDto transportDto) {
+        log.info("Попытка обновления транспорта {} ", transportDto);
+        if (transportDto != null) {
+            return transportService.updateTransport(transportDto);
+        } else {
+            return null;
+        }
+    }
 }

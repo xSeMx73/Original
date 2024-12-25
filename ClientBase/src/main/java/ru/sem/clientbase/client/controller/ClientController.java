@@ -57,4 +57,10 @@ public class ClientController {
         log.info("Удаление клиента с ID: {}", id);
         clientService.deleteClient(id);
     }
+
+    @PatchMapping
+    public ClientDto updateClient(@RequestBody ClientDto clientDto) {
+        log.info("Попытка обновления клиента {}", clientDto);
+      return clientService.updateClient(clientDto);
+    }
 }

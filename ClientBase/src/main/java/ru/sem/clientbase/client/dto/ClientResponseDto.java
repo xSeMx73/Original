@@ -28,5 +28,7 @@ public class ClientResponseDto {
 
     String email;
 
+    String company;
+
     List<TransportResponseDto> transportList;
 }

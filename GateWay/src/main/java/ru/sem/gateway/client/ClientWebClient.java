@@ -82,4 +82,24 @@ public class ClientWebClient {
                 .bodyToMono(Void.class)
                 .block();
     }
+
+    public ClientDto updateClient(ClientDto clientDto) {
+        log.info("<--- GATEWAY ClientWebClient Обновление клиента {}", clientDto);
+
+       return webClient
+                .patch()
+                .uri(url + "/clients")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(clientDto))
+                .exchangeToMono(clientResponse -> {
+                    if (clientResponse.statusCode().is5xxServerError()) {
+                        return Mono.error(new RuntimeException("Server Error"));
+                    } else if (clientResponse.statusCode().is4xxClientError()) {
+                        return Mono.error(new RuntimeException("Client Error"));
+                    } else {
+                        return clientResponse.bodyToMono(ClientDto.class);
+                    }
+                })
+                .block();
+    }
 }

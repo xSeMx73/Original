@@ -2,15 +2,33 @@
  function displayResults(data) {
     const tableBody = document.getElementById('results-body');
     tableBody.innerHTML = '';
-    console.log(data)
     data.forEach(client => {
+
+
+     ///////// Создаем строку с заголовками колонок, если это первый клиент
+        const headerRow = document.createElement('tr');
+
+        // Создаем ячейки заголовков
+        const headers = ['','Имя клиента', 'Фамилия клиента', 'Прозвище', 'Телефон', 'E-mail', 'Компания'];
+
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText; // Устанавливаем текст заголовка
+            headerRow.appendChild(th);
+        });
+
+        tableBody.appendChild(headerRow); // Добавляем строку с заголовками в тело таблицы
+
+
+///////////////////
+
         const row = document.createElement('tr');
 
-
+//////////////////
         // Кнопка для удаления клиента
         const deleteClientBtn = document.createElement('button');
         deleteClientBtn.textContent = 'Удалить клиента';
-        deleteClientBtn.classList.add('delete-client-btn');
+        deleteClientBtn.classList.add('delete-btn');
 
         deleteClientBtn.addEventListener('click', () => {
             confirmDeleteClient(client.id); // Передаем ID клиента для удаления
@@ -20,50 +38,80 @@
         deleteClientCell.appendChild(deleteClientBtn);
         row.appendChild(deleteClientCell); // Добавляем ячейку с кнопкой удаления клиента
 
+/////////////////
 
-        const cell = document.createElement('td');
-        const addTransportBtn = document.createElement('button');
-        addTransportBtn.textContent = 'добавить транспорт';
-        addTransportBtn.classList.add('add-transport-btn');
+        // Кнопка изменения клиента
+        const updateClientBtn = document.createElement("button");
+        updateClientBtn.textContent = 'Редактировать клиента';
+        updateClientBtn.classList.add('update-btn');
 
-        addTransportBtn.addEventListener('click', () => {
-            openTransportModal(client.id); // Передаем ID клиента
+        updateClientBtn.addEventListener('click', () => {
+            updateClient(client);
         });
 
-        cell.appendChild(addTransportBtn);
-        row.appendChild(cell);
+        deleteClientCell.appendChild(updateClientBtn);
 
-        if (client.name != null) {
+
+
+//////////////////
+
+
             const clientName = document.createElement('td');
             clientName.textContent = client.name;
             row.appendChild(clientName);
-        }
 
-        if (client.lastName != null) {
+
+
             const clientLastName = document.createElement('td');
             clientLastName.textContent = client.lastName;
             row.appendChild(clientLastName);
-        }
 
-        if (client.nickName != null) {
+
+
             const clientNick = document.createElement('td');
             clientNick.textContent = client.nickName;
             row.appendChild(clientNick);
-        }
 
-        if (client.phone != null) {
+
+
             const phone = document.createElement('td');
             phone.textContent = client.phone;
             row.appendChild(phone);
-        }
 
-        if (client.email != null) {
+
+
             const email = document.createElement('td');
             email.textContent = client.email;
             row.appendChild(email);
-        }
+
+            const company = document.createElement('td');
+            company.textContent = client.company;
+            row.appendChild(company);
+
 
         tableBody.appendChild(row);
+
+
+ ///////////// Строка с заголовками для транспорта
+
+        const headerTransportRow = document.createElement('tr');
+
+        // Создаем ячейки заголовков
+        const headersTransport = ['','Марка', 'Модель', 'VIN', 'Гос.номер', 'Год', 'Доп.информация'];
+
+        headersTransport.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText; // Устанавливаем текст заголовка
+            headerTransportRow.appendChild(th);
+        });
+
+        tableBody.appendChild(headerTransportRow); // Добавляем строку с заголовками в тело таблицы
+
+
+
+
+//////////
+
 
         client.transportList.forEach(transport => {
             const transportRow = document.createElement('tr');
@@ -79,43 +127,79 @@
             deleteCell.appendChild(deleteBtn);
             transportRow.appendChild(deleteCell); // Добавляем ячейку с кнопкой удаления в начало строки
 
-            if (transport.brandName != null) {
+/////////////////
+
+            // Кнопка изменения транспорта
+            const updateTransportBtn = document.createElement("button");
+            updateTransportBtn.textContent = 'Редактировать';
+            updateTransportBtn.classList.add('update-btn');
+            const clientID = client.id;
+            updateTransportBtn.addEventListener('click', () => {
+                updateTransport(transport, clientID);
+            });
+
+            deleteCell.appendChild(updateTransportBtn);
+
+
+//////////////////
+
+
                 const brand = document.createElement('td');
                 brand.textContent = transport.brandName;
                 transportRow.appendChild(brand);
-            }
 
-            if (transport.model != null) {
+
+
                 const model = document.createElement('td');
                 model.textContent = transport.model;
                 transportRow.appendChild(model);
-            }
 
-            if (transport.vin != null) {
+
+
                 const vin = document.createElement('td');
                 vin.textContent = transport.vin;
                 transportRow.appendChild(vin);
-            }
 
-            if (transport.gosNumber != null) {
+
+
                 const gosNumber = document.createElement('td');
                 gosNumber.textContent = transport.gosNumber;
                 transportRow.appendChild(gosNumber);
-            }
 
-            if (transport.year != null) {
+
+
                 const year = document.createElement('td');
                 year.textContent = transport.year;
                 transportRow.appendChild(year);
-            }
 
-            if (transport.addInform != null) {
+
+
                 const addInf = document.createElement('td');
                 addInf.textContent = transport.addInform;
                 transportRow.appendChild(addInf);
-            }
+
 
             tableBody.appendChild(transportRow);
         });
+
+        // Кнопка добавления транспорта
+
+        const addTransportRow = document.createElement('tr');
+        const addTransportCell = document.createElement('td');
+        addTransportCell.colSpan = 1; // сколько количество колонок
+        const addTransportBtn = document.createElement('button');
+        addTransportBtn.textContent = 'Добавить транспорт';
+        addTransportBtn.classList.add('add-transport-btn');
+
+        addTransportBtn.addEventListener('click', () => {
+            openTransportModal(client.id);
+        });
+
+        addTransportCell.appendChild(addTransportBtn);
+        addTransportRow.appendChild(addTransportCell);
+        tableBody.appendChild(addTransportRow);
+
     });
+
+
 }

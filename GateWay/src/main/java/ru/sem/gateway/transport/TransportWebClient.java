@@ -53,4 +53,22 @@ public class TransportWebClient {
                 .bodyToMono(Void.class)
                 .block();
     }
+
+    public TransportDto updateTransport(TransportDto transportDto) {
+        log.info("<---GATEWAY TransportWebClient Обновление транспорта {}", transportDto);
+        return webClient
+                .patch()
+                .uri(url + "/transport")
+                .body(BodyInserters.fromValue(transportDto))
+                .exchangeToMono(clientResponse -> {
+                    if (clientResponse.statusCode().is5xxServerError()) {
+                        return Mono.error(new RuntimeException("Server Error"));
+                    } else if (clientResponse.statusCode().is4xxClientError()) {
+                        return Mono.error(new RuntimeException("Client Error"));
+                    } else {
+                        return clientResponse.bodyToMono(TransportDto.class);
+                    }
+                })
+                .block();
+    }
 }

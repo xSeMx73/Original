@@ -34,6 +34,8 @@ public class Client {
 
     String email;
 
+    String company;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     List<Transport> transportList;
 

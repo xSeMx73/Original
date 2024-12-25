@@ -2,6 +2,7 @@ package ru.sem.clientbase.client.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,10 @@ import ru.sem.clientbase.exception.NotFoundException;
 import ru.sem.clientbase.exception.ParameterNotValidException;
 
 import java.util.List;
+import java.util.Objects;
 
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ClientService {
@@ -57,7 +60,14 @@ public class ClientService {
        clientRepository.delete(client);
     }
 
-    public Client validClient(Long id){
+    public Client validClient(Long id) {
       return clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Клиент не найден"));
+    }
+
+    public ClientDto updateClient(ClientDto clientDto) {
+        Client client = validClient(clientDto.getId());
+        log.info("Обновление клиента в сервисе {}", clientDto);
+        client =  clientRepository.save(Objects.requireNonNull(converter.convert(clientDto, Client.class)));
+        return converter.convert(client, ClientDto.class);
     }
 }

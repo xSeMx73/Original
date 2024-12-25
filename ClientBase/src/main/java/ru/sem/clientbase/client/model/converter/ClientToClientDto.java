@@ -20,6 +20,7 @@ public class ClientToClientDto implements Converter<Client, ClientDto> {
                 .nickName(source.getNickName())
                 .email(source.getEmail())
                 .phone(source.getPhone())
+                .company(source.getCompany())
                 .build();
     }
 }

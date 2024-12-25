@@ -22,6 +22,7 @@ public class ClientToClientResponseDto implements Converter<Client, ClientRespon
                 .nickName(source.getNickName())
                 .email(source.getEmail())
                 .phone(source.getPhone())
+                .company(source.getCompany())
                 .transportList(source.getTransportList().stream().map(converter::convert).toList())
                 .build();
     }

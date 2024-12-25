@@ -18,6 +18,7 @@ public class ClientDtoToClient implements Converter<ClientDto, Client> {
         client.setNickName(source.getNickName());
         client.setPhone(source.getPhone());
         client.setEmail(source.getEmail());
+        client.setCompany(source.getCompany());
         return client;
     }
 }

@@ -46,6 +46,8 @@
             padding: 10px;
             border: 1px solid #ccc;
             text-align: left;
+            white-space: nowrap;
+            min-width: 100px;
         }
         th {
             background-color: #007BFF;
@@ -66,24 +68,39 @@
             background-color: red;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 3px 6px;
         }
         .delete-btn:hover {
             background-color: darkred;
+        }
+        .update-btn {
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            padding: 3px 6px;
+        }
+        .update-btn:hover {
+            background-color: darkkhaki;
         }
         /* Стили для модального окна */
         .modal {
             display: none;
             position: fixed;
             z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            left: 50%; /* Сдвигаем в центр */
+            top: 50%; /* Сдвигаем вниз */
+            width: 80%; /* Устанавливаем ширину: 80% от родителя */
+            max-width: 500px; /* Максимальная ширина */
+            height: auto; /* Высота по содержимому */
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: white; /* Цвет фона для видимости */
+            transform: translate(-50%, -50%); /* Центрируем модальное окно */
+            border-radius: 10px; /* Закругление углов */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Эффект тени */
         }
         .modal-content {
             background-color: #fefefe;
@@ -111,16 +128,22 @@
      <script src="/static/js/openAddClientModal.js" defer></script>
      <script src="/static/js/transportModal.js" defer></script>
      <script src="/static/js/deleteClient.js" defer></script>
+     <script src="/static/js/upDateClient.js" defer></script>
+     <script src="/static/js/updateTransport.js" defer></script>
    </head>
    <body>
    <h1>Вас приветствует база данных клиентов сети магазинов Оригинал</h1>
    <div class="input-container">
        <button class="submit-button" onclick="fetchClients()">Поиск</button>
        <label for="name" class="input-label">Поиск клиента:</label>
-       <input type="text" id="name" name="query" class="input-field" required>
+       <input type="text" id="name" name="query" class="input-field" required onkeypress = "handleKeyPress(event)">
        <button class="submit-button" onclick="openAddClientModal()">Добавить клиента</button>
    </div>
-
+   <script>
+       function handleKeyPress(event) {
+           if (event.key === 'Enter') {
+               fetchClients();}}
+</script>
    <table>
        <thead>
        <tr>
@@ -143,15 +166,74 @@
         <input type="text" id="model" class="input-field" required><br>
         <label for="vin">VIN:</label>
         <input type="text" id="vin" class="input-field"><br>
-        <label for="gos-number">Гос. номер:</label>
+        <label for="gos-number">Гос.номер:</label>
         <input type="text" id="gos-number" class="input-field"><br>
         <label for="year">Год выпуска:</label>
         <input type="number" id="year" class="input-field" min="1900" max="2100"><br>
-        <label for="additional-info">Доп. информация:</label>
+        <label for="additional-info">Доп.информация:</label>
         <input type="text" id="additional-info" class="input-field"><br><br>
         <button class="submit-button" onclick="submitTransport()">Добавить транспорт</button>
     </div>
 </div>
+
+   <!-- Модальное окно для редактирования клиента -->
+   <div id="edit-client-modal" class="modal" style="display: none;">
+       <div class="modal-content">
+           <span class="close-button">&times;</span>
+           <h2>Редактировать клиента</h2>
+           <form id="edit-client-form">
+               <label for="client-name">Имя:</label>
+               <input type="text" id="client-name-update" required>
+               <br>
+               <label for="client-lastname">Фамилия:</label>
+               <input type="text" id="client-lastname-update" required>
+               <br>
+               <label for="client-nickname">Псевдоним:</label>
+               <input type="text" id="client-nickname-update">
+               <br>
+               <label for="client-phone">Телефон:</label>
+               <input type="tel" id="client-phone-update">
+               <br>
+               <label for="client-email">Год выпуска:</label>
+               <input type="email" id="client-email-update">
+               <br>
+               <label for="client-company">Организация:</label>
+               <input type="text" id="client-company-update">
+               <br>
+               <button type="submit">Сохранить изменения</button>
+           </form>
+       </div>
+   </div>
+
+   <!-- Модальное окно для редактирования транспорта -->
+   <div id="edit-transport-modal" class="modal" style="display: none;">
+       <div class="modal-content">
+           <span class="close-button">&times;</span>
+           <h2>Редактировать транспорт</h2>
+           <form id="edit-transport-form">
+               <label for="brand-name">Марка:</label>
+               <input type="text" id="brand-name-update" required>
+               <br>
+               <label for="model">Модель:</label>
+               <input type="text" id="model-update" required>
+               <br>
+               <label for="vin">VIN:</label>
+               <input type="text" id="VIN-update">
+               <br>
+               <label for="gos-number">Гос.номер:</label>
+               <input type="tel" id="gos-number-update">
+               <br>
+               <label for="year">Год выпуска:</label>
+               <input type="text" id="year-update">
+               <br>
+               <label for="additional-info">Доп.информация:</label>
+               <input type="text" id="info-update">
+               <br>
+               <button type="submit">Сохранить изменения</button>
+           </form>
+       </div>
+   </div>
+
 
 <!-- Модальное окно для подтверждения удаления клиента-->
 <div id="confirm-modal-deleteClient" class="modal">
@@ -184,9 +266,11 @@
         <label for="client-nickname">Псевдоним:</label>
         <input type="text" id="client-nickname" class="input-field"><br>
         <label for="client-phone">Телефон:</label>
-        <input type="tel" id="client-phone" class="input-field" required><br>
+        <input type="tel" id="client-phone" class="input-field"><br>
         <label for="client-email">Электронная почта:</label>
-        <input type="email" id="client-email" class="input-field" required><br><br>
+        <input type="email" id="client-email" class="input-field"><br><br>
+        <label for="client-company">Организация:</label>
+        <input type="text" id="client-company" class="input-field"><br><br>
         <button class="submit-button" onclick="submitClient()">Добавить клиента</button>
     </div>
 </div>

@@ -30,4 +30,10 @@ public class TransportController {
         log.info("<---GATEWAY TRANSPORT CONTROLLER Попытка удаления транспорта с ID: {}", id);
         webClient.deleteTransport(id);
     }
+
+    @PatchMapping
+    public TransportDto updateTransport (@RequestBody TransportDto transportDto) {
+        log.info("<---GATEWAY TRANSPORT CONTROLLER Попытка обновления транспорта {}", transportDto);
+        return webClient.updateTransport(transportDto);
+    }
 }

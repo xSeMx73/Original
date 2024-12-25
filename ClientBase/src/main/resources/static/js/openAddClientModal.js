@@ -13,16 +13,18 @@ function submitClient() {
     const nickName = document.getElementById('client-nickname').value;
     const phone = document.getElementById('client-phone').value;
     const email = document.getElementById('client-email').value;
+    const company = document.getElementById('client-company').value;
 
     const clientData = {
         name,
         lastName,
         nickName,
         phone,
-        email
+        email,
+        company
     };
 
-    fetch('http://localhost:9090/clients', {
+    fetch('http://192.168.1.201:9090/clients', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -32,7 +34,8 @@ function submitClient() {
         .then(response => {
             // Проверка, что ответ успешен (статус 200-299)
             if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
+                throw new Error('Некорректно заполнены поля');
+
             }
             return response.json(); // Возврат JSON-ответа
         })
@@ -45,5 +48,8 @@ function submitClient() {
                 console.error('ID клиента не найден в ответе:', data);
             }
         })
-        .catch((error) => console.error('Ошибка:', error));
+        .catch((error) => {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка: ' + error.message); // Выводим ошибку
+        });
 }

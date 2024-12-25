@@ -38,12 +38,28 @@ public class TransportService {
     }
 
     public void deleteTransport(Long id) {
-        getForId(id);
+        getTransportForId(id);
         transportRepository.deleteById(id);
     }
 
-    public Transport getForId(Long id){
-        return transportRepository.findById(id).orElseThrow(() -> new NotFoundException("Транспорт с ID: " + id + " не найден"));
+    public Transport getTransportForId(Long id){
+        return transportRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Транспорт с ID: " + id + " не найден"));
     }
 
+    public TransportResponseDto updateTransport(TransportResponseDto transportDto) {
+        Transport transport = new Transport();
+        if(transportDto.getId() != null) {
+           Long ownerId = getTransportForId(transportDto.getId()).getOwner().getId();
+            transport = converter.convert(transportDto, Transport.class);
+            Client client = clientRepository.findById(ownerId)
+                    .orElseThrow(() -> new NotFoundException("Клиент не найден"));
+         if(transport != null) {
+         transport.setOwner(client);
+         transport.setId(transportDto.getId());
+         transport = transportRepository.save(transport);
+            }
+        }
+        return converter.convert(transport, TransportResponseDto.class);
+    }
 }
