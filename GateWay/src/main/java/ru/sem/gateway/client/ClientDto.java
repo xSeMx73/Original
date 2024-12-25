@@ -2,11 +2,10 @@ package ru.sem.gateway.client;
 
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-
+@ToString
 @Getter
 @Setter
 @Builder
@@ -20,12 +19,13 @@ public class ClientDto {
     String name;
 
     String lastName;
-    @NotBlank
+
     String nickName;
 
-    Integer phone;
+    Long phone;
 
-    Long organizationId;
     @Email
     String email;
+
+    String company;
 }

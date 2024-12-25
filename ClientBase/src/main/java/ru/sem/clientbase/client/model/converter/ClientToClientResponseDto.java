@@ -1,15 +1,15 @@
-package ru.sem.clientbase.client.model;
+package ru.sem.clientbase.client.model.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import ru.sem.clientbase.client.dto.ClientResponseDto;
+import ru.sem.clientbase.client.model.Client;
 import ru.sem.clientbase.transport.model.converter.TransportToTransportResponseDto;
 
 @RequiredArgsConstructor
 @Component
 public class ClientToClientResponseDto implements Converter<Client, ClientResponseDto> {
-
 
     private final TransportToTransportResponseDto converter;
 
@@ -22,6 +22,7 @@ public class ClientToClientResponseDto implements Converter<Client, ClientRespon
                 .nickName(source.getNickName())
                 .email(source.getEmail())
                 .phone(source.getPhone())
+                .company(source.getCompany())
                 .transportList(source.getTransportList().stream().map(converter::convert).toList())
                 .build();
     }

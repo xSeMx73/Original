@@ -46,6 +46,8 @@
             padding: 10px;
             border: 1px solid #ccc;
             text-align: left;
+            white-space: nowrap;
+            min-width: 100px;
         }
         th {
             background-color: #007BFF;
@@ -66,24 +68,39 @@
             background-color: red;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 3px 6px;
         }
         .delete-btn:hover {
             background-color: darkred;
+        }
+        .update-btn {
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            padding: 3px 6px;
+        }
+        .update-btn:hover {
+            background-color: darkkhaki;
         }
         /* Стили для модального окна */
         .modal {
             display: none;
             position: fixed;
             z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            left: 50%; /* Сдвигаем в центр */
+            top: 50%; /* Сдвигаем вниз */
+            width: 80%; /* Устанавливаем ширину: 80% от родителя */
+            max-width: 500px; /* Максимальная ширина */
+            height: auto; /* Высота по содержимому */
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: white; /* Цвет фона для видимости */
+            transform: translate(-50%, -50%); /* Центрируем модальное окно */
+            border-radius: 10px; /* Закругление углов */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Эффект тени */
         }
         .modal-content {
             background-color: #fefefe;
@@ -105,210 +122,35 @@
             cursor: pointer;
         }
     </style>
-    <script>
-        async function fetchClients() {
-            const query = document.getElementById('name').value;
-            const response = await fetch('http://localhost:8080/clients?query=' + encodeURIComponent(query));
-            const data = await response.json();
-            displayResults(data);
-        }
-
-        function displayResults(data) {
-            const tableBody = document.getElementById('results-body');
-            tableBody.innerHTML = '';
-
-            data.forEach(client => {
-                const row = document.createElement('tr');
-
-                const cell = document.createElement('td');
-                const addTransportBtn = document.createElement('button');
-                addTransportBtn.textContent = 'добавить транспорт';
-                addTransportBtn.classList.add('add-transport-btn');
-
-                addTransportBtn.addEventListener('click', () => {
-                    openModal(client.id); // Передаем ID клиента
-                });
-
-                cell.appendChild(addTransportBtn);
-                row.appendChild(cell);
-
-                if (client.name != null) {
-                    const clientName = document.createElement('td');
-                    clientName.textContent = client.name;
-                    row.appendChild(clientName);
-                }
-
-                if (client.lastName != null) {
-                    const clientLastName = document.createElement('td');
-                    clientLastName.textContent = client.lastName;
-                    row.appendChild(clientLastName);
-                }
-
-                if (client.nickName != null) {
-                    const clientNick = document.createElement('td');
-                    clientNick.textContent = client.nickName;
-                    row.appendChild(clientNick);
-                }
-
-                if (client.phone != null) {
-                    const phone = document.createElement('td');
-                    phone.textContent = client.phone;
-                    row.appendChild(phone);
-                }
-
-                if (client.email != null) {
-                    const email = document.createElement('td');
-                    email.textContent = client.email;
-                    row.appendChild(email);
-                }
-
-                tableBody.appendChild(row);
-
-                client.transportList.forEach(transport => {
-                    const transportRow = document.createElement('tr');
-
-                    // Кнопка для удаления транспорта
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.textContent = 'Удалить';
-                    deleteBtn.classList.add('delete-btn');
-                    deleteBtn.addEventListener('click', () => {
-                        confirmDelete(transport.id);
-                    });
-                    const deleteCell = document.createElement('td');
-                    deleteCell.appendChild(deleteBtn);
-                    transportRow.appendChild(deleteCell); // Добавляем ячейку с кнопкой удаления в начало строки
-
-                    if (transport.brandName != null) {
-                        const brand = document.createElement('td');
-                        brand.textContent = transport.brandName;
-                        transportRow.appendChild(brand);
-                    }
-
-                    if (transport.model != null) {
-                        const model = document.createElement('td');
-                        model.textContent = transport.model;
-                        transportRow.appendChild(model);
-                    }
-
-                    if (transport.vin != null) {
-                        const vin = document.createElement('td');
-                        vin.textContent = transport.vin;
-                        transportRow.appendChild(vin);
-                    }
-
-                    if (transport.gosNumber != null) {
-                        const gosNumber = document.createElement('td');
-                        gosNumber.textContent = transport.gosNumber;
-                        transportRow.appendChild(gosNumber);
-                    }
-
-                    if (transport.year != null) {
-                        const year = document.createElement('td');
-                        year.textContent = transport.year;
-                        transportRow.appendChild(year);
-                    }
-
-                    if (transport.addInform != null) {
-                        const addInf = document.createElement('td');
-                        addInf.textContent = transport.addInform;
-                        transportRow.appendChild(addInf);
-                    }
-
-                    tableBody.appendChild(transportRow);
-                });
-            });
-        }
-
-        // Функция для подтверждения удаления
-        let transportToDeleteId;
-
-        function confirmDelete(transportId) {
-            transportToDeleteId = transportId; // Сохраняем ID удаляемого транспорта
-            document.getElementById('confirm-modal').style.display = 'block';
-        }
-
-        function cancelDelete() {
-            transportToDeleteId = null;
-            document.getElementById('confirm-modal').style.display = 'none';
-        }
-
-        async function executeDelete() {
-            console.log(transportToDeleteId);
-            if (transportToDeleteId) {
-                await fetch(`http://localhost:8080/transport/${transportToDeleteId}`, {
-                    method: 'DELETE',
-                });
-                transportToDeleteId = null;
-                document.getElementById('confirm-modal').style.display = 'none';
-                fetchClients(); // Обновляем список клиентов после удаления
-            }
-        }
-
-        function openModal(clientId) {
-            document.getElementById('modal').style.display = 'block';
-            document.getElementById('client-id').value = clientId; // Сохраняем ID клиента
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-
-        function submitTransport() {
-            const clientId = document.getElementById('client-id').value;
-            const brandName = document.getElementById('brand-name').value;
-            const model = document.getElementById('model').value;
-            const vin = document.getElementById('vin').value;
-            const gosNumber = document.getElementById('gos-number').value;
-            const year = document.getElementById('year').value;
-            const addInform = document.getElementById('additional-info').value;
-
-            const transportData = {
-                brandName,
-                model,
-                vin,
-                gosNumber,
-                year,
-                addInform
-            };
-
-            console.log(transportData);
-            console.log(clientId);
-
-            fetch('http://localhost:8080/transport', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'id': clientId
-                },
-                body: JSON.stringify(transportData),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Успех:', data);
-                    closeModal();
-                    fetchClients(); // Обновляем список клиентов после добавления
-                })
-                .catch((error) => {
-                    console.error('Ошибка:', error);
-                });
-        }
-    </script>
-</head>
-<body>
-<h1>Поиск клиентов</h1>
-<div class="input-container">
-    <button class="submit-button" onclick="fetchClients()">Поиск</button>
-    <label for="name" class="input-label">Поиск клиента:</label>
-    <input type="text" id="name" name="query" class="input-field" required>
-</div>
-
-<table>
-    <thead>
-    <tr>
-    </tr>
-    </thead>
-    <tbody id="results-body">
-    <!-- Результаты поиска будут помещены сюда -->
+     <script src="/static/js/deleteTransport.js" defer></script>
+     <script src="/static/js/displayResults.js" defer></script>
+     <script src="/static/js/fetchClients.js" defer></script>
+     <script src="/static/js/openAddClientModal.js" defer></script>
+     <script src="/static/js/transportModal.js" defer></script>
+     <script src="/static/js/deleteClient.js" defer></script>
+     <script src="/static/js/upDateClient.js" defer></script>
+     <script src="/static/js/updateTransport.js" defer></script>
+   </head>
+   <body>
+   <h1>Вас приветствует база данных клиентов сети магазинов Оригинал</h1>
+   <div class="input-container">
+       <button class="submit-button" onclick="fetchClients()">Поиск</button>
+       <label for="name" class="input-label">Поиск клиента:</label>
+       <input type="text" id="name" name="query" class="input-field" required onkeypress = "handleKeyPress(event)">
+       <button class="submit-button" onclick="openAddClientModal()">Добавить клиента</button>
+   </div>
+   <script>
+       function handleKeyPress(event) {
+           if (event.key === 'Enter') {
+               fetchClients();}}
+</script>
+   <table>
+       <thead>
+       <tr>
+       </tr>
+       </thead>
+       <tbody id="results-body">
+       <!-- Результаты поиска будут помещены сюда -->
     </tbody>
 </table>
 
@@ -324,22 +166,112 @@
         <input type="text" id="model" class="input-field" required><br>
         <label for="vin">VIN:</label>
         <input type="text" id="vin" class="input-field"><br>
-        <label for="gos-number">Гос. номер:</label>
+        <label for="gos-number">Гос.номер:</label>
         <input type="text" id="gos-number" class="input-field"><br>
         <label for="year">Год выпуска:</label>
         <input type="number" id="year" class="input-field" min="1900" max="2100"><br>
-        <label for="additional-info">Доп. информация:</label>
+        <label for="additional-info">Доп.информация:</label>
         <input type="text" id="additional-info" class="input-field"><br><br>
         <button class="submit-button" onclick="submitTransport()">Добавить транспорт</button>
     </div>
 </div>
 
-<!-- Модальное окно для подтверждения удаления -->
-<div id="confirm-modal" class="modal">
+   <!-- Модальное окно для редактирования клиента -->
+   <div id="edit-client-modal" class="modal" style="display: none;">
+       <div class="modal-content">
+           <span class="close-button">&times;</span>
+           <h2>Редактировать клиента</h2>
+           <form id="edit-client-form">
+               <label for="client-name">Имя:</label>
+               <input type="text" id="client-name-update" required>
+               <br>
+               <label for="client-lastname">Фамилия:</label>
+               <input type="text" id="client-lastname-update" required>
+               <br>
+               <label for="client-nickname">Псевдоним:</label>
+               <input type="text" id="client-nickname-update">
+               <br>
+               <label for="client-phone">Телефон:</label>
+               <input type="tel" id="client-phone-update">
+               <br>
+               <label for="client-email">Год выпуска:</label>
+               <input type="email" id="client-email-update">
+               <br>
+               <label for="client-company">Организация:</label>
+               <input type="text" id="client-company-update">
+               <br>
+               <button type="submit">Сохранить изменения</button>
+           </form>
+       </div>
+   </div>
+
+   <!-- Модальное окно для редактирования транспорта -->
+   <div id="edit-transport-modal" class="modal" style="display: none;">
+       <div class="modal-content">
+           <span class="close-button">&times;</span>
+           <h2>Редактировать транспорт</h2>
+           <form id="edit-transport-form">
+               <label for="brand-name">Марка:</label>
+               <input type="text" id="brand-name-update" required>
+               <br>
+               <label for="model">Модель:</label>
+               <input type="text" id="model-update" required>
+               <br>
+               <label for="vin">VIN:</label>
+               <input type="text" id="VIN-update">
+               <br>
+               <label for="gos-number">Гос.номер:</label>
+               <input type="tel" id="gos-number-update">
+               <br>
+               <label for="year">Год выпуска:</label>
+               <input type="text" id="year-update">
+               <br>
+               <label for="additional-info">Доп.информация:</label>
+               <input type="text" id="info-update">
+               <br>
+               <button type="submit">Сохранить изменения</button>
+           </form>
+       </div>
+   </div>
+
+
+<!-- Модальное окно для подтверждения удаления клиента-->
+<div id="confirm-modal-deleteClient" class="modal">
     <div class="modal-content">
-        <p>Вы действительно хотите удалить это транспортное средство?</p>
-        <button class="submit-button" onclick="executeDelete()">Да</button>
-        <button class="submit-button" onclick="cancelDelete()">Нет</button>
+        <p>Вы действительно хотите удалить клиента?</p>
+        <button class="submit-button" onclick="deleteClient()">Да</button>
+        <button class="submit-button" onclick="cancelDeleteClient()">Нет</button>
+    </div>
+</div>
+
+   <!-- Модальное окно для подтверждения удаления транспорта-->
+   <div id="confirm-modal" class="modal">
+       <div class="modal-content">
+           <p>Вы действительно хотите удалить это транспортное средство?</p>
+           <button class="submit-button" onclick="executeDelete()">Да</button>
+           <button class="submit-button" onclick="cancelDelete()">Нет</button>
+       </div>
+   </div>
+
+
+<!-- Модальное окно для добавления клиента -->
+<div id="add-client-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAddClientModal()">&times;</span>
+        <h2>Добавить клиента</h2>
+        <label for="client-name">Имя:</label>
+        <input type="text" id="client-name" class="input-field" required><br>
+        <label for="client-lastname">Фамилия:</label>
+        <input type="text" id="client-lastname" class="input-field" required><br>
+        <label for="client-nickname">Псевдоним:</label>
+        <input type="text" id="client-nickname" class="input-field"><br>
+        <label for="client-phone">Телефон:</label>
+        <input type="tel" id="client-phone" class="input-field"><br>
+        <label for="client-email">Электронная почта:</label>
+        <input type="email" id="client-email" class="input-field"><br><br>
+        <label for="client-company">Организация:</label>
+        <input type="text" id="client-company" class="input-field"><br><br>
+        <button class="submit-button" onclick="submitClient()">Добавить клиента</button>
     </div>
 </div>
 

@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import ru.sem.clientbase.transport.model.Transport;
 
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -34,6 +33,8 @@ public class Client {
     Long phone;
 
     String email;
+
+    String company;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     List<Transport> transportList;

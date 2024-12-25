@@ -2,7 +2,10 @@ package ru.sem.clientbase.transport.model;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import ru.sem.clientbase.client.model.Client;
 
