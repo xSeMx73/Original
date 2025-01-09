@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная страница</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: flex-end; /* Перемещаем содержимое блока к правому краю */
+      align-items: flex-start; /* Устанавливаем выравнивание по верхнему краю */
+      height: 100vh;
+      margin: 0;
+      background-image: url('/images/logo.jpg');
+      background-size: contain; /* Заполняет весь экран */
+      background-position: left; /* Центрирует изображение */
+      background-repeat: no-repeat; /* Не повторяет изображение */
+      background-color: white; /* Цвет фона, если изображение не загрузится */
+    }
+    .container {
+      text-align: center;
+      color: black; /* Измените цвет текста для лучшей видимости на фоне */
+      margin-right: 300px; /* Добавьте отступ справа для лучшего расположения */
+      margin-top: 20px; /* Добавляем отступ сверху, если нужно */
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 10px 0; /* Добавляем отступ между кнопками */
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Добро пожаловать!</h1>
+  <button onclick="location.href='clientBase.html'">База данных клиентов</button>
+  <button onclick="location.href='orderBook.html'">Сервис заказов</button> <!-- Новая кнопка добавлена здесь -->
+</div>
+
+</body>
+</html>

@@ -1,7 +1,11 @@
-package ru.sem.gateway.orderBook;
+package ru.sem.orderbook.order.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @ToString
 @Getter
@@ -10,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class OrderResponseDto {
 
     Long id;
 
@@ -26,7 +30,11 @@ public class OrderDto {
 
     Integer quantity;
 
-    String price;
+    Double price;
 
     String manager;
+
+    LocalDate deliveryTime;
+
+    LocalDateTime createTime;
 }
