@@ -15,7 +15,7 @@ function cancelDelete() {
 
 async function executeDelete() {
     if (transportToDeleteId) {
-        await fetch(`http://192.168.1.201:9090/transport/${transportToDeleteId}`, {
+        await fetch(`http://192.168.1.135:9090/transport/${transportToDeleteId}`, {
             method: 'DELETE',
         });
         transportToDeleteId = null;

@@ -14,7 +14,7 @@ function cancelDeleteClient() {
 async function deleteClient() {
 
     if(clientToDeleteId) {
-        fetch(`http://192.168.1.201:9090/clients/${clientToDeleteId}`, {
+        fetch(`http://192.168.1.135:9090/clients/${clientToDeleteId}`, {
             method: 'DELETE',
         })
             .then(response => {

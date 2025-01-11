@@ -16,7 +16,7 @@ public class TransportWebClient {
 
    private final WebClient webClient;
 
-    public TransportWebClient(@Value("${clientBase.url:http://192.168.1.201:8080}") String url) {
+    public TransportWebClient(@Value("${clientBase.url:http://192.168.1.135:8080}") String url) {
         this.url = url;
         webClient = WebClient.create(url);
     }

@@ -13,7 +13,7 @@ import ru.sem.clientbase.client.dto.ClientResponseDto;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://192.168.1.201:9090")
+@CrossOrigin(origins = "http://192.168.1.135:9090")
 @RequestMapping(path = "/clients")
 public class ClientController {
 

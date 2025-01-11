@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class OrderResponseDto {
 
     Long id;
 
@@ -26,7 +26,7 @@ public class OrderDto {
 
     Integer quantity;
 
-    String price;
+    Integer price;
 
     String manager;
 }

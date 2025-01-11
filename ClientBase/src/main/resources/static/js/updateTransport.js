@@ -50,7 +50,7 @@ function updateTransport(transport, clientID) {
 function saveTransportChanges(updatedTransport, clientID) {
 
 
-    fetch('http://192.168.1.201:9090/transport', {
+    fetch('http://192.168.1.135:9090/transport', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'

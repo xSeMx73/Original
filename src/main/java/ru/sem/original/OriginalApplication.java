@@ -11,6 +11,7 @@ public class OriginalApplication {
     public static void main(String[] args) {
         SpringApplication.run(GateWayApplication.class, args);
         SpringApplication.run(ClientBaseApplication.class, args);
+        SpringApplication.run(OrderBookApplication.class, args);
 
     }
 
