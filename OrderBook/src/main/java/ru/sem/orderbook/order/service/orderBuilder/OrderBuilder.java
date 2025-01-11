@@ -15,25 +15,34 @@ import java.util.regex.Pattern;
 @Service
 public class OrderBuilder {
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
    private final ComtransOrderBuilder comtrans;
+   private final OmegaOrderBuilder omega;
+   private final ArmtekOrderBuilder armtek;
+   private final TrackMotorsOrderBuilder trackMotors;
 
 
     public OrderDto disBuilder(OrderDto orderDto) {
         if(orderDto.getDealer().contains("наш склад")) {
             orderDto.setDealer("наш склад " + setCity(orderDto.getArticle()));
+            orderDto.setDeliveryTime(LocalDate.now());
+            return simpleBuilder(orderDto);
         }
         if(orderDto.getDealer().contains("Комтранс")) {
             orderDto =  comtrans.builder(orderDto);
+            return simpleBuilder(orderDto);
         }
         if(orderDto.getDealer().contains("Омега")) {
-            orderDto.setDealer("Омега " + setArticleAndBrand(orderDto.getArticle(), 9));
+            orderDto = omega.builder(orderDto);
+            return simpleBuilder(orderDto);
         }
-        orderDto.setPrice(priceFormat(orderDto.getPrice()));
-        orderDto.setBrand(setArticleAndBrand(orderDto.getArticle(), 1));
-        orderDto.setArticle(setArticleAndBrand(orderDto.getArticle(), 0));
-        orderDto.setCreateTime(LocalDateTime.now());
+        if (orderDto.getDealer().contains("Армтек")) {
+            orderDto = armtek.builder(orderDto);
+            return simpleBuilder(orderDto);
+        }
+        if (orderDto.getDealer().contains("Тракмоторс")) {
+            orderDto = trackMotors.builder(orderDto);
+            return simpleBuilder(orderDto);
+        }
 
         return orderDto;
     }
@@ -58,6 +67,14 @@ public class OrderBuilder {
       String result =  sourcePrice.replace(',', '.');
         result = result.replaceAll("\\u00A0", "");
          return result;
+    }
+
+    OrderDto simpleBuilder(OrderDto orderDto) {
+        orderDto.setPrice(priceFormat(orderDto.getPrice()));
+        orderDto.setBrand(setArticleAndBrand(orderDto.getArticle(), 1));
+        orderDto.setArticle(setArticleAndBrand(orderDto.getArticle(), 0));
+        orderDto.setCreateTime(LocalDateTime.now());
+        return orderDto;
     }
 
     }

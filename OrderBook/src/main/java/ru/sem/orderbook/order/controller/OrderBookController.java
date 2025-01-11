@@ -13,7 +13,7 @@ import ru.sem.orderbook.order.service.OrderBookService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/orders")
-@CrossOrigin(origins = "http://192.168.1.201:8181")
+@CrossOrigin(origins = "http://192.168.1.135:8181")
 public class OrderBookController {
 
     private final OrderBookService orderBookService;

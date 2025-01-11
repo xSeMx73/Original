@@ -25,7 +25,7 @@ function submitTransport() {
         addInform
     };
 
-    fetch('http://192.168.1.201:9090/transport', {
+    fetch('http://192.168.1.135:9090/transport', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -51,7 +51,7 @@ function updateClient(client) {
 function saveClientChanges(updatedClient) {
 
 
-    fetch('http://192.168.1.201:9090/clients', {
+    fetch('http://192.168.1.135:9090/clients', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'

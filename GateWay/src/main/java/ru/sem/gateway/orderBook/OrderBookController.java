@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/orders")
-@CrossOrigin(origins = "http://192.168.1.201:8080")
+@CrossOrigin(origins = "http://192.168.1.135:8080")
 public class OrderBookController {
 
     private final OrderWebClient orderWebClient;

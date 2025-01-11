@@ -22,7 +22,7 @@ public class OrderWebClient {
     private final WebClient webClient;
     public String url;
 
-    public OrderWebClient(@Value("${orderBook.url:http://192.168.1.201:8181}") String url) {
+    public OrderWebClient(@Value("${orderBook.url:http://192.168.1.135:8181}") String url) {
         this.url = url;
         webClient = WebClient.create(url);
     }

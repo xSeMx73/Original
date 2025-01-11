@@ -24,7 +24,7 @@ function submitClient() {
         company
     };
 
-    fetch('http://192.168.1.201:9090/clients', {
+    fetch('http://192.168.1.135:9090/clients', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

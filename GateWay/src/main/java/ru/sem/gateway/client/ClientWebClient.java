@@ -21,7 +21,7 @@ public class ClientWebClient {
     private final WebClient webClient;
     public String url;
 
-    public ClientWebClient(@Value("${clientBase.url:http://192.168.1.201:8080}") String url) {
+    public ClientWebClient(@Value("${clientBase.url:http://192.168.1.135:8080}") String url) {
         this.url = url;
         webClient = WebClient.create(url);
     }
