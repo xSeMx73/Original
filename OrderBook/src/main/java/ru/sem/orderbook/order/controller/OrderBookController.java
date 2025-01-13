@@ -9,11 +9,12 @@ import ru.sem.orderbook.order.dto.OrderDto;
 import ru.sem.orderbook.order.dto.OrderResponseDto;
 import ru.sem.orderbook.order.service.OrderBookService;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/orders")
-@CrossOrigin(origins = "http://192.168.1.135:8181")
 public class OrderBookController {
 
     private final OrderBookService orderBookService;
@@ -24,5 +25,12 @@ public class OrderBookController {
      OrderResponseDto orderResponseDto = orderBookService.createOrder(orderDto);
      log.info("<---OrderBooK ORDER CONTROLLER заказ добавлен {}", orderResponseDto);
      return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrderResponseDto>> getOrders() {
+        log.info("<---OrderBooK ORDER CONTROLLER Попытка получения заказов");
+        List<OrderResponseDto> orders = orderBookService.getOrders();
+        return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 }

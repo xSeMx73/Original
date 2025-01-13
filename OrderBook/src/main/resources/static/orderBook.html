@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html lang="ru">
+<style>
+    table {
+        border-collapse: collapse; /* Схлопывание границ */
+        width: 100%; /* Ширина таблицы */
+    }
+
+    th, td {
+        border: 1px solid black; /* Одна граница для ячеек */
+        padding: 8px; /* Отступы в ячейках */
+        text-align: left; /* Выравнивание текста влево */
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сервис заказов</title>
+    <script src="/js/orders.js" defer></script> <!-- Подключение JavaScript-файла -->
 </head>
 <body>
+<h1>Добро пожаловать в сервис заказов</h1>
+<button id="viewOrdersButton">Посмотреть последние заказы</button>
 
+<div id="ordersList"></div> <!-- Контейнер для списка заказов -->
 </body>
 </html>

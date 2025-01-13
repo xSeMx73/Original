@@ -5,6 +5,7 @@ async function fetchClients() {
 
     const query = document.getElementById('name').value;
     const response = await fetch('http://192.168.1.135:9090/clients?query=' + encodeURIComponent(query));
+    console.log(response)
     const data = await response.json();
     displayResults(data);
 }

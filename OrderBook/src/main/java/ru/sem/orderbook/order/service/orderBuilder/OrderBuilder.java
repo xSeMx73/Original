@@ -19,28 +19,36 @@ public class OrderBuilder {
    private final OmegaOrderBuilder omega;
    private final ArmtekOrderBuilder armtek;
    private final TrackMotorsOrderBuilder trackMotors;
+   private final ForumOrderBuilder forum;
+   private final FavoritOrderBuilder favorit;
+   private final AutostelsOrderBuilder autostels;
 
 
     public OrderDto disBuilder(OrderDto orderDto) {
-        if(orderDto.getDealer().contains("наш склад")) {
+        if (orderDto.getDealer().contains("наш склад")) {
             orderDto.setDealer("наш склад " + setCity(orderDto.getArticle()));
             orderDto.setDeliveryTime(LocalDate.now());
             return simpleBuilder(orderDto);
-        }
-        if(orderDto.getDealer().contains("Комтранс")) {
+        } if (orderDto.getDealer().contains("Комтранс")) {
             orderDto =  comtrans.builder(orderDto);
             return simpleBuilder(orderDto);
-        }
-        if(orderDto.getDealer().contains("Омега")) {
+        } if (orderDto.getDealer().contains("Омега")) {
             orderDto = omega.builder(orderDto);
             return simpleBuilder(orderDto);
-        }
-        if (orderDto.getDealer().contains("Армтек")) {
+        } if (orderDto.getDealer().contains("Армтек")) {
             orderDto = armtek.builder(orderDto);
             return simpleBuilder(orderDto);
-        }
-        if (orderDto.getDealer().contains("Тракмоторс")) {
+        } if (orderDto.getDealer().contains("Тракмоторс")) {
             orderDto = trackMotors.builder(orderDto);
+            return simpleBuilder(orderDto);
+        } if (orderDto.getDealer().contains("Форум")) {
+            orderDto = forum.builder(orderDto);
+            return simpleBuilder(orderDto);
+        } if (orderDto.getDealer().contains("Фаворит")) {
+            orderDto = favorit.builder(orderDto);
+            return simpleBuilder(orderDto);
+        } if (orderDto.getDealer().contains("Автостелс")) {
+            orderDto = autostels.builder(orderDto);
             return simpleBuilder(orderDto);
         }
 

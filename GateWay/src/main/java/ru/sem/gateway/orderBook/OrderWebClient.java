@@ -14,6 +14,7 @@ import ru.sem.clientbase.client.dto.ClientResponseDto;
 import ru.sem.gateway.client.ClientDto;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -46,5 +47,14 @@ public class OrderWebClient {
                     }
                 })
                 .block();
+    }
+
+    public Flux<OrderResponseDto> getOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение заказов");
+        return webClient
+                .get()
+                .uri(url + "/orders")
+                .retrieve()
+                .bodyToFlux(OrderResponseDto.class);
     }
 }

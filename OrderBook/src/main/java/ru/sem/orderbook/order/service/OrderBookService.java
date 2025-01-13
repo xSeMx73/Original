@@ -11,7 +11,9 @@ import ru.sem.orderbook.order.model.Order;
 import ru.sem.orderbook.order.repository.OrderBookRepository;
 import ru.sem.orderbook.order.service.orderBuilder.OrderBuilder;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,5 +35,11 @@ public class OrderBookService {
 
 
        return converter.convert(order, OrderResponseDto.class);
+    }
+
+    public List<OrderResponseDto> getOrders() {
+        List<Order> orders = orderRepository.findAll();
+      return orders.stream().map(order -> converter.convert(order, OrderResponseDto.class))
+              .collect(Collectors.toList());
     }
 }

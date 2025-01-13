@@ -5,12 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:9090"})
 @RequestMapping(path = "/orders")
-@CrossOrigin(origins = "http://192.168.1.135:8080")
 public class OrderBookController {
 
     private final OrderWebClient orderWebClient;
@@ -21,5 +24,11 @@ public class OrderBookController {
      OrderResponseDto orderResponseDto = orderWebClient.createOrder(orderDto);
      log.info("<---GATEWAY ORDER CONTROLLER заказ добавлен {}", orderResponseDto);
      return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
+    }
+
+    @GetMapping
+    public Flux<OrderResponseDto> getOrders() {
+        log.info("<---GATEWAY ORDER CONTROLLER Попытка получения заказов");
+        return orderWebClient.getOrders().log();
     }
 }

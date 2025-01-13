@@ -3,6 +3,9 @@ package ru.sem.gateway.orderBook;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @ToString
 @Getter
 @Setter
@@ -29,4 +32,8 @@ public class OrderResponseDto {
     Integer price;
 
     String manager;
+
+    LocalDate deliveryTime;
+
+    LocalDateTime createTime;
 }
