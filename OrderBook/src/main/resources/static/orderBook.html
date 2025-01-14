@@ -11,17 +11,27 @@
         padding: 8px; /* Отступы в ячейках */
         text-align: left; /* Выравнивание текста влево */
     }
+    /* Стили для поля ввода */
+    #filterInput {
+        margin: 10px 0; /* Отступы сверху и снизу */
+        padding: 8px; /* Паддинг для поля ввода */
+        width: 100%; /* Ширина под 100% */
+    }
 </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сервис заказов</title>
-    <script src="/js/orders.js" defer></script> <!-- Подключение JavaScript-файла -->
+
+    <script src="js/orders.js" defer></script> <!-- Подключение JavaScript-файла -->
+    <script src="js/formatDate.js" defer></script>
 </head>
 <body>
 <h1>Добро пожаловать в сервис заказов</h1>
 <button id="viewOrdersButton">Посмотреть последние заказы</button>
 
-<div id="ordersList"></div> <!-- Контейнер для списка заказов -->
+<input type="text" id="filterInput" placeholder="Поиск по Доп.информации, Наименованию и Артикулу" style="display: none;"> <!-- Поле ввода для фильтрации -->
+
+<div id="ordersList"></div> <!-- Контейнер для отображения списка заказов -->
 </body>
 </html>

@@ -3,7 +3,9 @@ package ru.sem.orderbook.order.service.orderBuilder;
 import org.springframework.stereotype.Service;
 import ru.sem.orderbook.order.dto.OrderDto;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -29,7 +31,11 @@ public class FavoritOrderBuilder {
        if (stringDate.length == 5) {
            return LocalDate.parse(stringDate[3], formatter);
        }
-       return LocalDate.now();
+       if (LocalDate.now().getDayOfWeek() == DayOfWeek.SATURDAY ||
+               LocalTime.now().isAfter(LocalTime.of(15, 0)) ) {
+        return LocalDate.now().plusDays(2);
+       }
+       return LocalDate.now().plusDays(1);
     }
 
 }

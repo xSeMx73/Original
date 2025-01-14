@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.sem.orderbook.order.dto.OrderDto;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 
 @Service
 public class ForumOrderBuilder {
@@ -25,7 +25,10 @@ public class ForumOrderBuilder {
 
     private LocalDate buildDeliveryDate(String[] stringDate) {
         String[] splitDate = stringDate[3].split(" ");
-        return LocalDate.now().plusDays(Integer.parseInt(splitDate[0]));
+        if (splitDate[0].length() == 1) {
+            return LocalDate.now().plusDays(Integer.parseInt(splitDate[0]));
+        }
+        else return LocalDate.now().plusDays(1);
     }
 }
 

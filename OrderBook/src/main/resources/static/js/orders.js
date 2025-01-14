@@ -2,14 +2,30 @@
 
 // Функция для получения и отображения последних заказов
 async function fetchRecentOrders() {
+    const response = await fetch('http://192.168.1.135:9090/orders');
+    const orders = await response.json(); // Преобразование ответа в JSON
+    displayOrders(orders); // Вызываем функцию для отображения заказов
+    document.getElementById('filterInput').style.display = 'block';
 
-        const response = await fetch('http://192.168.1.135:9090/orders');
-        console.log(response)
-        const orders = await response.json(); // Преобразование ответа в JSON
-         console.log(orders)
-        // Выбор контейнера для отображения заказов
-        const ordersList = document.getElementById('ordersList');
-        ordersList.innerHTML = ''; // Очистить предыдущий содержимое
+    // Привязываем функцию фильтрации к событию ввода текста
+    document.getElementById('filterInput').addEventListener('input', function() {
+        const filterText = this.value.toLowerCase();
+        // Фильтруем заказы и отображаем только подходящие
+        const filteredOrders = orders.filter(order => {
+            return (
+                order.productName.toLowerCase().includes(filterText) ||
+                order.article.toLowerCase().includes(filterText) ||
+                order.info.toLowerCase().includes(filterText)
+            );
+        });
+        displayOrders(filteredOrders); // Показываем отфильтрованные заказы
+    });
+}
+
+// Функция для отображения заказов в виде таблицы
+function displayOrders(orders) {
+    const ordersList = document.getElementById('ordersList');
+    ordersList.innerHTML = ''; // Очистить предыдущие содержимое
 
     // Генерация HTML для списка заказов в виде таблицы
     const table = document.createElement('table');
@@ -19,7 +35,7 @@ async function fetchRecentOrders() {
     // Создаем заголовок таблицы
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    const headers = ['Артикул', 'Наименование', 'Бренд', 'Поставщик',
+    const headers = ['Артикул', 'Наименование', 'Бренд', 'Поставщик', 'Количество',
         'Цена', 'Менеджер', 'Доп.информация', 'Время заказа', 'День доставки'];
 
     headers.forEach(headerText => {
@@ -41,11 +57,12 @@ async function fetchRecentOrders() {
             order.productName,
             order.brand,
             order.dealer,
+            order.quantity,
             order.price,
             order.manager,
             order.info,
-            order.createTime,
-            order.deliveryTime
+            formatDate(order.createTime),
+            formatDate2(order.deliveryTime)
         ];
 
         cells.forEach(cellText => {
@@ -60,7 +77,6 @@ async function fetchRecentOrders() {
 
     // Добавляем таблицу в контейнер
     ordersList.appendChild(table);
-
 }
 
 // Связываем кнопку с функцией при загрузке страницы

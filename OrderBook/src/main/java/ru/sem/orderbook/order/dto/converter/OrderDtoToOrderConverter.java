@@ -22,7 +22,6 @@ public class OrderDtoToOrderConverter implements Converter<OrderDto, Order> {
         order.setQuantity(source.getQuantity());
         order.setProductName(source.getProductName());
         order.setDeliveryTime(source.getDeliveryTime());
-        order.setCreateTime(source.getCreateTime());
         return order;
     }
 }

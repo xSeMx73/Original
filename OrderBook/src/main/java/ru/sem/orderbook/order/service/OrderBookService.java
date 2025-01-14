@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class OrderBookService {
 
-    private final OrderBuilder builderOurWarhouse;
+    private final OrderBuilder orderBuilder;
     private final OrderBookRepository orderRepository;
 
     @Qualifier("mvcConversionService")
@@ -28,13 +28,11 @@ public class OrderBookService {
 
     public OrderResponseDto createOrder(OrderDto orderDto) {
 
-    OrderDto tempOrderDto = builderOurWarhouse.disBuilder(orderDto);
+    OrderDto tempOrderDto = orderBuilder.disBuilder(orderDto);
 
         Order order = orderRepository.save(Objects.requireNonNull(converter.convert(tempOrderDto, Order.class)));
 
-
-
-       return converter.convert(order, OrderResponseDto.class);
+        return converter.convert(order, OrderResponseDto.class);
     }
 
     public List<OrderResponseDto> getOrders() {

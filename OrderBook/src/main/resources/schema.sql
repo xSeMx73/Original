@@ -9,5 +9,5 @@ dealer VARCHAR(255),
 info VARCHAR(255),
 manager VARCHAR(255),
 delivery_time DATE,
-create_time DATE
+create_time TIMESTAMP(0)
 );

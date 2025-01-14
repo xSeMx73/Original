@@ -38,7 +38,7 @@ public class OrderBuilder {
         } if (orderDto.getDealer().contains("Армтек")) {
             orderDto = armtek.builder(orderDto);
             return simpleBuilder(orderDto);
-        } if (orderDto.getDealer().contains("Тракмоторс")) {
+        } if (orderDto.getDealer().contains("ТракМоторс")) {
             orderDto = trackMotors.builder(orderDto);
             return simpleBuilder(orderDto);
         } if (orderDto.getDealer().contains("Форум")) {
@@ -74,6 +74,7 @@ public class OrderBuilder {
     String priceFormat(String sourcePrice) {
       String result =  sourcePrice.replace(',', '.');
         result = result.replaceAll("\\u00A0", "");
+        result = String.valueOf(PriceBuilder.buildPrice(result));
          return result;
     }
 
@@ -81,7 +82,6 @@ public class OrderBuilder {
         orderDto.setPrice(priceFormat(orderDto.getPrice()));
         orderDto.setBrand(setArticleAndBrand(orderDto.getArticle(), 1));
         orderDto.setArticle(setArticleAndBrand(orderDto.getArticle(), 0));
-        orderDto.setCreateTime(LocalDateTime.now());
         return orderDto;
     }
 
