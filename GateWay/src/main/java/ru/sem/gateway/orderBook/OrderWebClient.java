@@ -1,5 +1,6 @@
 package ru.sem.gateway.orderBook;
 
+import io.micrometer.common.util.internal.logging.InternalLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -49,11 +50,29 @@ public class OrderWebClient {
                 .block();
     }
 
-    public Flux<OrderResponseDto> getOrders() {
-        log.info("<--- GATEWAY OrderWebClient Получение заказов");
+    public Flux<OrderResponseDto> getAllOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение всех заказов");
         return webClient
                 .get()
                 .uri(url + "/orders")
+                .retrieve()
+                .bodyToFlux(OrderResponseDto.class);
+    }
+
+    public Flux<OrderResponseDto> getClientsOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение заказов клиентов");
+        return webClient
+                .get()
+                .uri(url + "/orders/clientsOrders")
+                .retrieve()
+                .bodyToFlux(OrderResponseDto.class);
+    }
+
+    public Flux<OrderResponseDto> getSortByDealerOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение отсортированных по поставщику заказов");
+        return webClient
+                .get()
+                .uri(url + "/orders/sortByDealerOrders")
                 .retrieve()
                 .bodyToFlux(OrderResponseDto.class);
     }

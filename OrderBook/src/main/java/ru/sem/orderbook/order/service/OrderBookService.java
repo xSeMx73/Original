@@ -27,17 +27,28 @@ public class OrderBookService {
     private final ConversionService converter;
 
     public OrderResponseDto createOrder(OrderDto orderDto) {
-
     OrderDto tempOrderDto = orderBuilder.disBuilder(orderDto);
-
-        Order order = orderRepository.save(Objects.requireNonNull(converter.convert(tempOrderDto, Order.class)));
-
+        Order order = orderRepository
+                .save(Objects.requireNonNull(converter.convert(tempOrderDto, Order.class)));
         return converter.convert(order, OrderResponseDto.class);
     }
 
-    public List<OrderResponseDto> getOrders() {
-        List<Order> orders = orderRepository.findAll();
+    public List<OrderResponseDto> getAllOrders() {
+        List<Order> orders = orderRepository.findAll().reversed();
       return orders.stream().map(order -> converter.convert(order, OrderResponseDto.class))
               .collect(Collectors.toList());
+    }
+
+    public List<OrderResponseDto> getClientsOrders() {
+        List<Order> clientsOrders = orderRepository.findClientsOrders();
+
+        return clientsOrders.stream().map(order -> converter.convert(order, OrderResponseDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<OrderResponseDto> getSortByDealerOrders() {
+        List<Order> sortOrders = orderRepository.findSortByDealerOrders();
+        return sortOrders.stream().map(order -> converter.convert(order, OrderResponseDto.class))
+                .collect(Collectors.toList());
     }
 }

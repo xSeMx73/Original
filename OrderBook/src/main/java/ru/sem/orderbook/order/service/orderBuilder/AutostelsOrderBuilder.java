@@ -26,7 +26,7 @@ public class AutostelsOrderBuilder {
             return LocalDate.now().plusDays(Long.parseLong(splitDelivery[0]));
         }
         return LocalDate.now()
-                .plusDays((int) Math.ceil((double) Long.parseLong(
-                        splitDelivery[0] + splitDelivery[2]) / 2));
+                .plusDays((int) Math.ceil((double) (Long.parseLong(
+                        splitDelivery[0]) + Long.parseLong(splitDelivery[2])) / 2));
     }
 }

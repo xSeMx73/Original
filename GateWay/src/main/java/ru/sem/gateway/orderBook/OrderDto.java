@@ -29,4 +29,5 @@ public class OrderDto {
     String price;
 
     String manager;
+
 }

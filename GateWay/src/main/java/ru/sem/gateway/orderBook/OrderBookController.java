@@ -27,8 +27,20 @@ public class OrderBookController {
     }
 
     @GetMapping
-    public Flux<OrderResponseDto> getOrders() {
-        log.info("<---GATEWAY ORDER CONTROLLER Попытка получения заказов");
-        return orderWebClient.getOrders().log();
+    public Flux<OrderResponseDto> getAllOrders() {
+        log.info("<---GATEWAY ORDER CONTROLLER Попытка получения всех заказов");
+        return orderWebClient.getAllOrders().log();
+    }
+
+    @GetMapping("/clientsOrders")
+    public Flux<OrderResponseDto> getClientsOrders() {
+        log.info("<---GATEWAY ORDER CONTROLLER Попытка получения заказов клиентов");
+        return orderWebClient.getClientsOrders().log();
+    }
+
+    @GetMapping("/sortByDealerOrders")
+    public Flux<OrderResponseDto> getSortByDealerOrders() {
+        log.info("<---GATEWAY ORDER CONTROLLER Попытка получения отсортированных по поставщику заказов");
+        return orderWebClient.getSortByDealerOrders().log();
     }
 }

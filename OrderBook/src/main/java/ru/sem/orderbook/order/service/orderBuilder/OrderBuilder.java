@@ -43,7 +43,8 @@ public class OrderBuilder {
             return simpleBuilder(orderDto);
         } if (orderDto.getDealer().contains("Форум")) {
             orderDto = forum.builder(orderDto);
-            return simpleBuilder(orderDto);
+            orderDto = simpleBuilder(orderDto);
+            return forumProductNameBuilder(orderDto);
         } if (orderDto.getDealer().contains("Фаворит")) {
             orderDto = favorit.builder(orderDto);
             return simpleBuilder(orderDto);
@@ -82,6 +83,12 @@ public class OrderBuilder {
         orderDto.setPrice(priceFormat(orderDto.getPrice()));
         orderDto.setBrand(setArticleAndBrand(orderDto.getArticle(), 1));
         orderDto.setArticle(setArticleAndBrand(orderDto.getArticle(), 0));
+        orderDto.setInfo(orderDto.getInfo().replaceAll("-", ""));
+        return orderDto;
+    }
+    private OrderDto forumProductNameBuilder(OrderDto orderDto) {
+        String[] words = orderDto.getProductName().split("ФОРУМ-АВТО");
+        orderDto.setProductName(words[0]);
         return orderDto;
     }
 

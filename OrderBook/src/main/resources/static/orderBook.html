@@ -17,6 +17,13 @@
         padding: 8px; /* Паддинг для поля ввода */
         width: 100%; /* Ширина под 100% */
     }
+
+    .supplier-title {
+        text-align: center; /* Центрируем текст */
+        font-size: 1em; /* Увеличиваем размер шрифта */
+        margin: 15px 0; /* Добавляем отступы сверху и снизу */
+        font-weight: bold; /* Делаем текст жирным */
+    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -25,13 +32,22 @@
 
     <script src="js/orders.js" defer></script> <!-- Подключение JavaScript-файла -->
     <script src="js/formatDate.js" defer></script>
+    <script src="js/ordersForClients.js" defer></script>
+    <script src="js/display.js" defer></script>
+    <script src="js/sortByDealerOrders.js" defer></script>
+
 </head>
 <body>
 <h1>Добро пожаловать в сервис заказов</h1>
-<button id="viewOrdersButton">Посмотреть последние заказы</button>
+<button id="viewOrdersButton">Все заказы</button>
+<button id="viewClientsOrdersButton">Заказные позиции</button>
+<button id="sortByDealerOrdersButton">Кнопка для завхоза</button>
 
 <input type="text" id="filterInput" placeholder="Поиск по Доп.информации, Наименованию и Артикулу" style="display: none;"> <!-- Поле ввода для фильтрации -->
 
-<div id="ordersList"></div> <!-- Контейнер для отображения списка заказов -->
+<div id="ordersList"></div> <!-- Контейнер для отображения списка всех заказов -->
+<div id="clientsOrdersList"></div> <!-- Контейнер для отображения заказных товаров -->
+<div id="sortOrdersList"></div> <!-- Контейнер для отображения списка отсортированных заказов -->
+<div id="output" class="center"></div> <!-- Место для вывода разделителя поставщика -->
 </body>
 </html>
