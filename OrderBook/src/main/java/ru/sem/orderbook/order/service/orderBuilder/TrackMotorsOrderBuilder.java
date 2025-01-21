@@ -32,6 +32,7 @@ public class TrackMotorsOrderBuilder {
                         && LocalTime.now().isBefore(LocalTime.of(18, 0)))) {
                     return LocalDate.now().plusDays(1);
                 }
+                else return LocalDate.now().plusDays(2);
             } else if (splitArticle[3].contains("Москва")) {
                 if (now.getDayOfWeek() != DayOfWeek.SATURDAY
                         && LocalTime.now().isBefore(LocalTime.of(17, 0))
@@ -39,6 +40,7 @@ public class TrackMotorsOrderBuilder {
                         && LocalTime.now().isBefore(LocalTime.of(13, 0)))) {
                     return LocalDate.now().plusDays(1);
                 }
+                else return LocalDate.now().plusDays(2);
             } else if (splitArticle[3].contains("Нижний Новгород")) {
                 return LocalDate.now().plusMonths(1);
             }
@@ -53,6 +55,4 @@ public class TrackMotorsOrderBuilder {
         }
         return "ПАРТНЕРКА " + splitArticle[splitArticle.length - 1];
     }
-
-
 }

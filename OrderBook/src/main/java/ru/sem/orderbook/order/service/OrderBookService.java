@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.sem.orderbook.order.dto.OrderDto;
 import ru.sem.orderbook.order.dto.OrderResponseDto;
@@ -34,7 +36,7 @@ public class OrderBookService {
     }
 
     public List<OrderResponseDto> getAllOrders() {
-        List<Order> orders = orderRepository.findAll().reversed();
+        List<Order> orders = orderRepository.findAllOrders();
       return orders.stream().map(order -> converter.convert(order, OrderResponseDto.class))
               .collect(Collectors.toList());
     }

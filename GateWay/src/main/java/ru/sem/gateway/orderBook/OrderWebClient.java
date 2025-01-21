@@ -1,21 +1,13 @@
 package ru.sem.gateway.orderBook;
 
-import io.micrometer.common.util.internal.logging.InternalLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.sem.clientbase.client.dto.ClientResponseDto;
-import ru.sem.gateway.client.ClientDto;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @Slf4j
 @Component

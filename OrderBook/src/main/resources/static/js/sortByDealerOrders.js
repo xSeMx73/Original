@@ -21,7 +21,7 @@ function displaySortOrders(sortOrders) {
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     const headers = ['Артикул', 'Наименование', 'Бренд', 'Количество',
-        'Менеджер', 'Доп.информация', 'День доставки'];
+       'Цена продажи', 'Менеджер', 'Доп.информация', 'День доставки'];
 
     headers.forEach(headerText => {
         const th = document.createElement('th');
@@ -59,6 +59,7 @@ function displaySortOrders(sortOrders) {
             sortOrder.productName,
             sortOrder.brand,
             sortOrder.quantity,
+            sortOrder.price,
             sortOrder.manager,
             sortOrder.info,
             formatDate2(sortOrder.deliveryTime)
@@ -77,6 +78,7 @@ function displaySortOrders(sortOrders) {
 
 // Добавляем таблицу в контейнер
     sortOrdersList.appendChild(table);
+    document.getElementById("printButton").style.display = "block"; // Показываем кнопку
 }
 
 // Связываем кнопку с функцией при загрузке страницы

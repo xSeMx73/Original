@@ -25,10 +25,13 @@ public class ForumOrderBuilder {
 
     private LocalDate buildDeliveryDate(String[] stringDate) {
         String[] splitDate = stringDate[3].split(" ");
-        if (splitDate[0].length() == 1) {
+        if (splitDate[1].equals("дн")) {
             return LocalDate.now().plusDays(Integer.parseInt(splitDate[0]));
         }
-        else return LocalDate.now().plusDays(1);
+        else if (Integer.parseInt(splitDate[0]) > 10) {
+            return LocalDate.now().plusDays(1);
+        }
+        return LocalDate.now();
     }
 }
 
