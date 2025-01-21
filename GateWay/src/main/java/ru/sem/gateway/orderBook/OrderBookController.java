@@ -2,8 +2,6 @@ package ru.sem.gateway.orderBook;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +28,7 @@ public class OrderBookController {
     @GetMapping
     public Flux<OrderResponseDto> getAllOrders() {
         log.info("<---GATEWAY ORDER CONTROLLER Попытка получения всех заказов");
-        return orderWebClient.getAllOrders().log("*******GATEWAY ORDER CONTROLLER");
+        return orderWebClient.getAllOrders();
     }
 
     @GetMapping("/clientsOrders")
@@ -42,6 +40,6 @@ public class OrderBookController {
     @GetMapping("/sortByDealerOrders")
     public Flux<OrderResponseDto> getSortByDealerOrders() {
         log.info("<---GATEWAY ORDER CONTROLLER Попытка получения отсортированных по поставщику заказов");
-        return orderWebClient.getSortByDealerOrders().log();
+        return orderWebClient.getSortByDealerOrders();
     }
 }
