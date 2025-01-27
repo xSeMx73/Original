@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.sem.orderbook.order.dto.OrderDto;
 import ru.sem.orderbook.order.dto.OrderResponseDto;
 import ru.sem.orderbook.order.model.Order;
 import ru.sem.orderbook.order.repository.OrderBookRepository;
 import ru.sem.orderbook.order.service.orderBuilder.OrderBuilder;
+import ru.sem.orderbook.telegramBot.ReturnOrdersBot;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,16 +21,17 @@ import java.util.stream.Collectors;
 @Service
 public class OrderBookService {
 
-    private final OrderBuilder orderBuilder;
-    private final OrderBookRepository orderRepository;
-
     @Qualifier("mvcConversionService")
     private final ConversionService converter;
+    private final ReturnOrdersBot returnOrdersBot;
+    private final OrderBuilder orderBuilder;
+    private final OrderBookRepository orderRepository;
 
     public OrderResponseDto createOrder(OrderDto orderDto) {
     OrderDto tempOrderDto = orderBuilder.disBuilder(orderDto);
         Order order = orderRepository
                 .save(Objects.requireNonNull(converter.convert(tempOrderDto, Order.class)));
+        returnOrdersBot.sendMessage("Создан заказ " + orderDto);
         return converter.convert(order, OrderResponseDto.class);
     }
 

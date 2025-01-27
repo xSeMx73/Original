@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.sem.orderbook.order.dto.OrderDto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,8 +41,7 @@ public class OrderBuilder {
             return simpleBuilder(orderDto);
         } if (orderDto.getDealer().contains("Форум")) {
             orderDto = forum.builder(orderDto);
-            orderDto = simpleBuilder(orderDto);
-            return forumProductNameBuilder(orderDto);
+            return simpleBuilder(orderDto);
         } if (orderDto.getDealer().contains("Фаворит")) {
             orderDto = favorit.builder(orderDto);
             return simpleBuilder(orderDto);
@@ -84,13 +81,25 @@ public class OrderBuilder {
         orderDto.setBrand(setArticleAndBrand(orderDto.getArticle(), 1));
         orderDto.setArticle(setArticleAndBrand(orderDto.getArticle(), 0));
         orderDto.setInfo(orderDto.getInfo().replaceAll("-", ""));
-        return orderDto;
-    }
-    private OrderDto forumProductNameBuilder(OrderDto orderDto) {
-        String[] words = orderDto.getProductName().split("ФОРУМ-АВТО");
-        orderDto.setProductName(words[0]);
-        return orderDto;
-    }
+        orderDto.setProductName(productNameBuilder(orderDto.getProductName()));
+        orderDto.setManager(orderDto.getManager()
+                .contains("Хваткова2") ? "Гришин Евгений" : orderDto.getManager());
 
+        return orderDto;
     }
+    private String productNameBuilder(String productName) {
+        String[] words = productName.split(" ");
+        if(words.length > 10) {
+            StringBuilder truncated = new StringBuilder();
+            for (int i = 0; i < 10; i++) {
+                if (words[i].contains("ФОРУМ-АВТО")) {
+                    return truncated.toString().trim();
+                }
+                truncated.append(words[i]).append(" ");
+            }
+            return truncated.toString().trim();
+        }
+        return productName;
+    }
+}
 

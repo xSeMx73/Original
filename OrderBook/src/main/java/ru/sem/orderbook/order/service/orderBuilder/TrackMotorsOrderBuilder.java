@@ -34,10 +34,10 @@ public class TrackMotorsOrderBuilder {
                 }
                 else return LocalDate.now().plusDays(2);
             } else if (splitArticle[3].contains("Москва")) {
+
                 if (now.getDayOfWeek() != DayOfWeek.SATURDAY
-                        && LocalTime.now().isBefore(LocalTime.of(17, 0))
-                        && (now.getDayOfWeek() != DayOfWeek.SUNDAY
-                        && LocalTime.now().isBefore(LocalTime.of(13, 0)))) {
+                        && (now.getDayOfWeek() != DayOfWeek.SUNDAY || LocalTime.now().isBefore(LocalTime.of(13, 0)))
+                        && LocalTime.now().isBefore(LocalTime.of(17, 0))) {
                     return LocalDate.now().plusDays(1);
                 }
                 else return LocalDate.now().plusDays(2);

@@ -1,11 +1,9 @@
-package ru.sem.orderbook.order.dto;
+package ru.sem.gateway.orderBook.orderMonitor;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @ToString
 @Getter
@@ -14,13 +12,11 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderResponseDto {
+public class PendOrderDto {
 
     Long id;
 
     String info;
-
-    String dealer;
 
     String productName;
 
@@ -34,8 +30,8 @@ public class OrderResponseDto {
 
     String manager;
 
-    LocalDate deliveryTime;
+    LocalDate inputData;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    LocalDateTime createTime;
+    LocalDate returnDate;
+
 }
