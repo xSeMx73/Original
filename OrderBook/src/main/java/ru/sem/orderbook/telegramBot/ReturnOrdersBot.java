@@ -1,8 +1,8 @@
 package ru.sem.orderbook.telegramBot;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 
 import org.telegram.telegrambots.client.jetty.JettyTelegramClient;
 import org.telegram.telegrambots.longpolling.interfaces.LongPollingUpdateConsumer;
@@ -12,17 +12,18 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.longpolling.starter.SpringLongPollingBot;
+import ru.sem.orderbook.orderMonitor.model.UsersChatId;
+import ru.sem.orderbook.orderMonitor.repository.ChatIDRepository;
 
+
+
+@RequiredArgsConstructor
 @Component
 public class ReturnOrdersBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
 
-    long chatId;
 
-    private final TelegramClient telegramClient;
-
-    public ReturnOrdersBot() {
-        telegramClient = new JettyTelegramClient(getBotToken());
-    }
+    private final ChatIDRepository chatIDRepository;
+    private final TelegramClient telegramClient = new JettyTelegramClient(getBotToken());
 
 
     @Override
@@ -40,31 +41,56 @@ public class ReturnOrdersBot implements SpringLongPollingBot, LongPollingSingleT
     public void consume(Update update) {
         // Мы проверяем, есть ли в обновлении сообщение, а в сообщении - текст
         if (update.hasMessage() && update.getMessage().hasText()) {
-            // Установите переменные
-            String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
-            chatId = chat_id;
+            UsersChatId usersChatId = new UsersChatId();
+            usersChatId.setChatId(chat_id);
+            usersChatId.setUserLogin(update.getMessage().getFrom().getUserName());
+            usersChatId.setUserName(update.getMessage().getFrom().getFirstName());
+            chatIDRepository.save(usersChatId);
             SendMessage message = SendMessage // Create a message object
                     .builder()
                     .chatId(chat_id)
-                    .text(message_text)
+                    .text("Привет " + update.getMessage().getFrom().getFirstName() +
+                            "! Ты подключился к сервису мониторинга возвратов.")
                     .build();
             try {
-                telegramClient.execute(message); // Sending our message object to user
+                telegramClient.execute(message);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void sendMessage(String message) {
-        SendMessage message1 = SendMessage // Create a message object
+    public void sendMessageName(String manager,
+                            Long chatId) {
+        SendMessage message = SendMessage // Create a message object
                 .builder()
                 .chatId(chatId)
-                .text(message)
+                .text(manager + " Вам нужно в течении двух дней вернуть следующие " +
+                        "товары или соответствующе отметить их в сервисе")
                 .build();
         try {
-            telegramClient.execute(message1); // Sending our message object to user
+            telegramClient.execute(message); // Sending our message object to user
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessage(String info,
+                            String dealer,
+                            String productName,
+                            String article,
+                            Long chatId) {
+        SendMessage message = SendMessage // Create a message object
+                .builder()
+                .chatId(chatId)
+                .text("Клиент: " + info + "\n" +
+                        "Поставщик: " + dealer + "\n" +
+                        "Название товара: " + productName + "\n" +
+                        "Артикул: " + article)
+                .build();
+        try {
+            telegramClient.execute(message); // Sending our message object to user
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

@@ -17,6 +17,7 @@ public class OrderToPendOrderConverter implements Converter<Order, PendOrder> {
         pendOrder.setInfo(source.getInfo());
         pendOrder.setPrice(source.getPrice());
         pendOrder.setArticle(source.getArticle());
+        pendOrder.setDealer(source.getDealer());
         pendOrder.setInputData(source.getDeliveryTime());
         pendOrder.setProductName(source.getProductName());
         pendOrder.setBrand(source.getBrand());

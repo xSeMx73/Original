@@ -1,5 +1,6 @@
 package ru.sem.orderbook.orderMonitor.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
@@ -27,6 +28,7 @@ public class PendOrderService {
     private final PendOrderRepository pendOrderRepository;
 
     @Scheduled(cron = "0 0 0 * * ?")
+//    @PostConstruct
     private void updatePendOrderTable() {
     List<PendOrder> pendOrders = orderBookRepository.findClientsOrders()
             .stream()

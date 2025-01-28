@@ -31,7 +31,6 @@ public class OrderBookService {
     OrderDto tempOrderDto = orderBuilder.disBuilder(orderDto);
         Order order = orderRepository
                 .save(Objects.requireNonNull(converter.convert(tempOrderDto, Order.class)));
-        returnOrdersBot.sendMessage("Создан заказ " + orderDto);
         return converter.convert(order, OrderResponseDto.class);
     }
 

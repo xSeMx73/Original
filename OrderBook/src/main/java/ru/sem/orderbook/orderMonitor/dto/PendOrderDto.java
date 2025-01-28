@@ -22,6 +22,8 @@ public class PendOrderDto {
 
     String brand;
 
+    String dealer;
+
     String article;
 
     Integer quantity;

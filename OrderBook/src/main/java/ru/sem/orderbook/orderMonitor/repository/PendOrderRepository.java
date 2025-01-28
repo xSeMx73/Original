@@ -12,4 +12,6 @@ public interface PendOrderRepository extends JpaRepository<PendOrder, Long> {
 
     @Query("select p from PendOrder as p where p.reason is null ")
     List<PendOrder> findAllWhereReasonIsNull();
+
+
 }

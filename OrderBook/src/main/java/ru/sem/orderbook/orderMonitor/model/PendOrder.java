@@ -29,6 +29,8 @@ public class PendOrder {
 
     String brand;
 
+    String dealer;
+
     Integer quantity;
 
     Double price;
