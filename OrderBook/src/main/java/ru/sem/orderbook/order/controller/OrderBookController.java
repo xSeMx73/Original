@@ -9,11 +9,12 @@ import ru.sem.orderbook.order.dto.OrderDto;
 import ru.sem.orderbook.order.dto.OrderResponseDto;
 import ru.sem.orderbook.order.service.OrderBookService;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/orders")
-@CrossOrigin(origins = "http://192.168.1.135:8181")
 public class OrderBookController {
 
     private final OrderBookService orderBookService;
@@ -24,5 +25,26 @@ public class OrderBookController {
      OrderResponseDto orderResponseDto = orderBookService.createOrder(orderDto);
      log.info("<---OrderBooK ORDER CONTROLLER заказ добавлен {}", orderResponseDto);
      return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
+        log.info("<---OrderBooK ORDER CONTROLLER Попытка получения всех заказов");
+        List<OrderResponseDto> orders = orderBookService.getAllOrders();
+        return ResponseEntity.status(HttpStatus.OK).body(orders);
+    }
+
+    @GetMapping("/clientsOrders")
+    public ResponseEntity<List<OrderResponseDto>> getClientsOrders() {
+        log.info("<---OrderBooK ORDER CONTROLLER Попытка получения заказов клиентов");
+        List<OrderResponseDto> clientsOrders = orderBookService.getClientsOrders();
+        return ResponseEntity.status(HttpStatus.OK).body(clientsOrders);
+    }
+
+    @GetMapping("/sortByDealerOrders")
+    public ResponseEntity<List<OrderResponseDto>> getSortByDealerOrders() {
+        log.info("<---OrderBooK ORDER CONTROLLER Попытка получения отсортированных по поставщику заказов");
+        List<OrderResponseDto> sortOrders = orderBookService.getSortByDealerOrders();
+        return ResponseEntity.status(HttpStatus.OK).body(sortOrders);
     }
 }

@@ -6,14 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.sem.clientbase.client.dto.ClientResponseDto;
-import ru.sem.gateway.client.ClientDto;
-
-import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
@@ -46,5 +40,32 @@ public class OrderWebClient {
                     }
                 })
                 .block();
+    }
+
+    public Flux<OrderResponseDto> getAllOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение всех заказов");
+        return webClient
+                .get()
+                .uri(url + "/orders")
+                .retrieve()
+                .bodyToFlux(OrderResponseDto.class);
+    }
+
+    public Flux<OrderResponseDto> getClientsOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение заказов клиентов");
+        return webClient
+                .get()
+                .uri(url + "/orders/clientsOrders")
+                .retrieve()
+                .bodyToFlux(OrderResponseDto.class);
+    }
+
+    public Flux<OrderResponseDto> getSortByDealerOrders() {
+        log.info("<--- GATEWAY OrderWebClient Получение отсортированных по поставщику заказов");
+        return webClient
+                .get()
+                .uri(url + "/orders/sortByDealerOrders")
+                .retrieve()
+                .bodyToFlux(OrderResponseDto.class);
     }
 }

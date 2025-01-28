@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/transport")
-@CrossOrigin(origins = "http://192.168.1.135:9090")
+@CrossOrigin(origins = {"http://localhost:9090"})
 public class TransportController {
 
     private final TransportWebClient webClient;

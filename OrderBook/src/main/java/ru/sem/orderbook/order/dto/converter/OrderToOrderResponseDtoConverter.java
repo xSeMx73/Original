@@ -23,6 +23,8 @@ public class OrderToOrderResponseDtoConverter implements Converter<Order, OrderR
                 .manager(source.getManager())
                 .productName(source.getProductName())
                 .quantity(source.getQuantity())
+                .createTime(source.getCreateTime())
+                .deliveryTime(source.getDeliveryTime())
                 .build();
     }
 }

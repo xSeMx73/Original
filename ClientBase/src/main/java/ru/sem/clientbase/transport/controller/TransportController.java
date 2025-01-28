@@ -14,7 +14,6 @@ import ru.sem.clientbase.transport.service.TransportService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/transport")
-@CrossOrigin(origins = "http://192.168.1.135:8080")
 public class TransportController {
 
     private final TransportService transportService;

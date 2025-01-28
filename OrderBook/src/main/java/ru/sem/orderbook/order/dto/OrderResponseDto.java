@@ -1,8 +1,8 @@
 package ru.sem.orderbook.order.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,5 +36,6 @@ public class OrderResponseDto {
 
     LocalDate deliveryTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime createTime;
 }
