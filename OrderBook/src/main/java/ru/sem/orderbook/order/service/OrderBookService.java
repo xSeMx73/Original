@@ -23,7 +23,6 @@ public class OrderBookService {
 
     @Qualifier("mvcConversionService")
     private final ConversionService converter;
-    private final ReturnOrdersBot returnOrdersBot;
     private final OrderBuilder orderBuilder;
     private final OrderBookRepository orderRepository;
 

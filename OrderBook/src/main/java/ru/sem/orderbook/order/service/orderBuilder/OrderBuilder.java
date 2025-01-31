@@ -20,6 +20,7 @@ public class OrderBuilder {
    private final ForumOrderBuilder forum;
    private final FavoritOrderBuilder favorit;
    private final AutostelsOrderBuilder autostels;
+   private final KoronaOrderBuilder korona;
 
 
     public OrderDto disBuilder(OrderDto orderDto) {
@@ -48,9 +49,12 @@ public class OrderBuilder {
         } if (orderDto.getDealer().contains("Автостелс")) {
             orderDto = autostels.builder(orderDto);
             return simpleBuilder(orderDto);
+        } if (orderDto.getDealer().contains("Корона Авто")) {
+            orderDto = korona.builder(orderDto);
+            return simpleBuilder(orderDto);
         }
 
-        return orderDto;
+        return simpleBuilder(orderDto);
     }
 
     String setCity (String fullString) {

@@ -7,24 +7,26 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Service
-public class AutostelsOrderBuilder {
+public class KoronaOrderBuilder {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     public OrderDto builder(OrderDto order) {
-
         String[] splitArticle = order.getArticle().split(" {3}");
-        order.setDealer("Автостелс");
+        order.setDealer("Корона " + buildDealer(splitArticle));
         order.setDeliveryTime(buildDeliveryDate(splitArticle));
         return order;
     }
 
+    private String buildDealer(String[] splitArticle) {
+        if (splitArticle.length == 5) {
+            return splitArticle[4];
+        }
+        return "ПАРТНЕРКА";
+    }
 
     private LocalDate buildDeliveryDate(String[] stringDate) {
         String[] splitDelivery = stringDate[3].split(" ");
-        if (splitDelivery.length < 3) {
-            return LocalDate.now().plusDays(Long.parseLong(splitDelivery[0]));
-        }
-        return LocalDate.now()
-                .plusDays((int) Math.ceil((double) (Long.parseLong(
-                        splitDelivery[0]) + Long.parseLong(splitDelivery[2])) / 2));
+        return LocalDate.parse(splitDelivery[0] + "." + LocalDate.now().getYear(), formatter);
     }
 }
