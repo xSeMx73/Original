@@ -39,7 +39,6 @@ public class ReturnOrdersBot implements SpringLongPollingBot, LongPollingSingleT
 
     @Override
     public void consume(Update update) {
-        // Мы проверяем, есть ли в обновлении сообщение, а в сообщении - текст
         if (update.hasMessage() && update.getMessage().hasText()) {
             long chat_id = update.getMessage().getChatId();
             UsersChatId usersChatId = new UsersChatId();
@@ -47,7 +46,7 @@ public class ReturnOrdersBot implements SpringLongPollingBot, LongPollingSingleT
             usersChatId.setUserLogin(update.getMessage().getFrom().getUserName());
             usersChatId.setUserName(update.getMessage().getFrom().getFirstName());
             chatIDRepository.save(usersChatId);
-            SendMessage message = SendMessage // Create a message object
+            SendMessage message = SendMessage
                     .builder()
                     .chatId(chat_id)
                     .text("Привет " + update.getMessage().getFrom().getFirstName() +
@@ -63,7 +62,7 @@ public class ReturnOrdersBot implements SpringLongPollingBot, LongPollingSingleT
 
     public void sendMessageName(String manager,
                             Long chatId) {
-        SendMessage message = SendMessage // Create a message object
+        SendMessage message = SendMessage
                 .builder()
                 .chatId(chatId)
                 .text(manager + " Вам нужно в течении двух дней вернуть следующие " +
@@ -90,7 +89,7 @@ public class ReturnOrdersBot implements SpringLongPollingBot, LongPollingSingleT
                         "Артикул: " + article)
                 .build();
         try {
-            telegramClient.execute(message); // Sending our message object to user
+            telegramClient.execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

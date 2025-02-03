@@ -1,8 +1,7 @@
-package ru.sem.garantiesservice.dto;
+package ru.sem.gateway.garanties;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.sem.garantiesservice.model.GarantRequest;
 
 import java.time.LocalDate;
 
@@ -17,7 +16,6 @@ public class GarantResponseDto {
 
     Long id;
 
-
     String clientName;
 
     String partArticle;
@@ -28,7 +26,7 @@ public class GarantResponseDto {
 
     String partDealer;
 
-    GarantRequest.Status status;
+    String status;
 
     LocalDate createTime;
 

@@ -21,9 +21,9 @@ public class GarantRequest {
     @GeneratedValue
     Long id;
 
-    String clientName;
+    String clientName; // Наименование клиента
 
-    Integer clientPhone;
+    Integer clientPhone; //номер телефона клиента
 
     String transportModel; // модель ТС
 
@@ -37,19 +37,19 @@ public class GarantRequest {
 
     Long mileageEnd; // пробег при снятии
 
-    String vin;
+    String vin; //вин номер
 
     LocalDate dateStartRepair; // дата установки запчасти
 
-    LocalDate dateRemovePart; // дата демонтажа
+    LocalDate dateRemovePart; // дата демонтажа запчасти
 
-    String partArticle;
+    String partArticle; // артикул запчасти
 
-    String partBrand;
+    String partBrand; // производитель запчасти
 
-    String partName;
+    String partName; // наименование запчасти
 
-    String partDealer; // поставщик
+    String partDealer; // поставщик запчасти
 
     String faultDescription; //описание неисправности
 
@@ -58,9 +58,9 @@ public class GarantRequest {
     String createManager; // ответственный менеджер
 
     @Enumerated(EnumType.STRING)
-    Status status = Status.CREATED; // статус
+    Status status; // статус
 
-    LocalDate dateUpdateStatus; // дата последнего обновления статуса
+    LocalDate lastUpdateStatusTime; // дата последнего обновления статуса
 
     public enum Status {CREATED, SENDREQUESTDEALER, SENDPARTDEALER, APPROVED, REJECTED, REQUESTMOREINFO}
 }
