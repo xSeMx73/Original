@@ -17,7 +17,6 @@ public class GarantResponseDto {
 
     Long id;
 
-
     String clientName;
 
     String partArticle;
@@ -30,7 +29,7 @@ public class GarantResponseDto {
 
     GarantRequest.Status status;
 
-    LocalDate createTime;
+    LocalDate createDate;
 
     LocalDate lastUpdateStatusTime;
 

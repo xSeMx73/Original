@@ -14,6 +14,25 @@ public class GarantRequestDtoToGarantRequestConverter implements Converter<Garan
     public GarantRequest convert(GarantRequestDto source) {
         return GarantRequest.builder()
                 .clientName(source.getClientName())
+                .clientPhone(source.getClientPhone())
+                .transportModel(source.getTransportModel())
+                .transportBrand(source.getTransportBrand())
+                .gosNumber(source.getGosNumber())
+                .transportYear(source.getTransportYear())
+                .mileageStart(source.getMileageStart())
+                .mileageEnd(source.getMileageEnd())
+                .vin(source.getVin())
+                .dateStartRepair(source.getDateStartRepair())
+                .dateRemovePart(source.getDateRemovePart())
+                .partArticle(source.getPartArticle())
+                .partBrand(source.getPartBrand())
+                .partName(source.getPartName())
+                .partDealer(source.getPartDealer())
+                .createDate(source.getCreateDate())
+                .createManager(source.getCreateManager())
+                .faultDescription(source.getFaultDescription())
+                .status(source.getStatus())
+                .lastUpdateStatusTime(source.getLastUpdateStatusTime())
                 .build();
 
     }

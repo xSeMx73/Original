@@ -28,10 +28,10 @@ public class GarantResponseDto {
 
     String status;
 
-    LocalDate createTime;
+    LocalDate createDate;
 
     LocalDate lastUpdateStatusTime;
 
-    String manager;
+    String createManager;
 
 }

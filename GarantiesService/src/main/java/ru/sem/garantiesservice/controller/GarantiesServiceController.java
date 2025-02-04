@@ -1,13 +1,16 @@
 package ru.sem.garantiesservice.controller;
 
+
+
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sem.garantiesservice.dto.GarantRequestDto;
 import ru.sem.garantiesservice.service.GarantService;
+
+import java.util.List;
+
 
 @Slf4j
 @RestController
@@ -22,6 +25,14 @@ public class GarantiesServiceController {
         log.info("<--- GARANTIESSERVICE Попытка создания рекламации {}", request);
         GarantRequestDto requestDto = garantService.createGarantRequest(request);
         log.info("<--- GARANTIESSERVICE Рекламация создана {}", requestDto);
-        return requestDto;
+        return request;
+    }
+
+    @GetMapping
+    public List<GarantRequestDto> getRequests() {
+        log.info("<--- GARANTIESSERVICE Попытка запроса рекламаций");
+        List<GarantRequestDto> garantRequestDtoList = garantService.getGarantRequestDtoList();
+        log.info("<--- GARANTIESSERVICE Список рекламация успешно отправлен {}", garantRequestDtoList);
+        return garantRequestDtoList;
     }
 }

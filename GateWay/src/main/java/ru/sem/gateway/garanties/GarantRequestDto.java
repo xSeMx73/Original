@@ -18,7 +18,7 @@ public class GarantRequestDto {
 
     String clientName;
 
-    Integer clientPhone;
+    Long clientPhone;
 
     String transportModel;
 

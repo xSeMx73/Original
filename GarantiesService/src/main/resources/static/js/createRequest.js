@@ -1,8 +1,8 @@
 function createRequest() {
+    closeModal()
     const modal = document.createElement('div');
     modal.id = 'modal';
     modal.className = 'modal';
-
     modal.innerHTML = `
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -57,9 +57,7 @@ function createRequest() {
                 <textarea id="faultDescription" name="faultDescription" required></textarea>
 
                 <label for="createManager">Ответственный менеджер:</label>
-                <input type="text" id="createManager" name="createManager">
-
-                <input type="hidden" id="createDate" name="createDate">
+                <input type="text" id="createManager" name="createManager" required>
 
                 <button type="submit">Отправить заявку</button>
             </form>
@@ -67,6 +65,43 @@ function createRequest() {
     `;
     document.body.appendChild(modal);
     modal.style.display = "block"; // Показываем модальное окно
+
+    // Добавляем обработчик события submit для формы
+    const form = document.getElementById('requestForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+        // Создаем объект с данными формы
+        const formData = new FormData(form);
+        const data = {};
+
+        // Итерация по элементам FormData и добавление их в объект
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Отправляем данные на сервер
+        fetch("http://192.168.1.135:9090/garanties", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data) // Преобразуем объект в JSON
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Ошибка сети при отправке данных");
+                }
+                return response.json(); // Если успешный ответ, парсим JSON
+            })
+            .then(data => {
+                console.log("Успешный ответ с сервера:", data);
+                closeModal(); // Закрываем модальное окно при успехе
+            })
+            .catch(error => {
+                console.error("Ошибка при отправке данных:", error);
+            });
+    });
 }
 
 function closeModal() {
@@ -76,12 +111,3 @@ function closeModal() {
         document.body.removeChild(modal); // Удаляем модальное окно из DOM
     }
 }
-
-// обработка формы
-document.addEventListener('submit', function(event) {
-    if (event.target.id === 'requestForm') {
-        event.preventDefault();
-        // Обработайте отправку данных формы здесь
-        closeModal(); // Закрываем модальное окно после отправки
-    }
-});

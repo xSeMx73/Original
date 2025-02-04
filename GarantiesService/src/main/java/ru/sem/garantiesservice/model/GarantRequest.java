@@ -18,12 +18,13 @@ import java.time.LocalDate;
 public class GarantRequest {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "garant_seq_gen")
+    @SequenceGenerator(name = "garant_seq_gen", sequenceName = "garant_seq", allocationSize = 1)
     Long id;
 
     String clientName; // Наименование клиента
 
-    Integer clientPhone; //номер телефона клиента
+    Long clientPhone; //номер телефона клиента
 
     String transportModel; // модель ТС
 

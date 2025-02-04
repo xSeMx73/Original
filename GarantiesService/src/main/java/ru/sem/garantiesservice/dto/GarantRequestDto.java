@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
         String clientName;
 
-        Integer clientPhone;
+        Long clientPhone;
 
         String transportModel;
 
@@ -53,7 +53,7 @@ import java.time.LocalDate;
 
         String createManager;
 
-        GarantRequest.Status status = GarantRequest.Status.CREATED;
+        GarantRequest.Status status;
 
         LocalDate lastUpdateStatusTime;
 }

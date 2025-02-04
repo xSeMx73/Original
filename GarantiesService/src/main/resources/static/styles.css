@@ -1,0 +1,64 @@
+.modal-content {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    width: 90%; /* Задаем ширину почти на весь экран */
+    max-width: 600px; /* Максимальная ширина для большей отзывчивости */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .close {
+        color: #aaa;
+        float: right; /* Выравниваем кнопку закрытия вправо */
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer; /* Указатель для курсора */
+    }
+}
+
+.form-group {
+    margin-bottom: 20px; /* Увеличиваем отступы между группами */
+}
+label {
+    display: block; /* Обеспечиваем блочное отображение для новых строк */
+    margin-bottom: 5px; /* Добавляем отступ между меткой и полем ввода */
+}
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%; /* Поля занимают 100% ширины родительского элемента */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Учитываем отступы и границы в общей ширине */
+}
+
+textarea {
+    resize: vertical; /* Разрешаем вертикальное изменение размера */
+    height: 200px; /* Начальная высота для текстового поля */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: orange; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none;
+    border-radius: 5px; /* Закругленные углы кнопок */
+    cursor: pointer;
+    display: inline-block; /* Отображение как инлайн-блок */
+    text-align: center; /* Центрирование текста */
+    margin: 10px 0; /* Отступы сверху и снизу */
+}
+
+button:hover {
+    background-color: #d17132;
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Изменяем цвет при наведении */
+    text-decoration: none; /* Убираем подчеркивание */
+    outline: none; /* Убираем обводку */
+}
