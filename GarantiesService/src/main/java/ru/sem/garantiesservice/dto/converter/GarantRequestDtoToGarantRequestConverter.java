@@ -13,6 +13,7 @@ public class GarantRequestDtoToGarantRequestConverter implements Converter<Garan
     @Override
     public GarantRequest convert(GarantRequestDto source) {
         return GarantRequest.builder()
+                .id(source.getId())
                 .clientName(source.getClientName())
                 .clientPhone(source.getClientPhone())
                 .transportModel(source.getTransportModel())

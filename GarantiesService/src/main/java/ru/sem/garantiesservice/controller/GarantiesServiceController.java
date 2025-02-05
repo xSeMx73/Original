@@ -35,4 +35,20 @@ public class GarantiesServiceController {
         log.info("<--- GARANTIESSERVICE Список рекламация успешно отправлен {}", garantRequestDtoList);
         return garantRequestDtoList;
     }
+
+    @GetMapping("/{id}")
+    public GarantRequestDto getRequestById(@PathVariable long id) {
+        log.info("<--- GARANTIESSERVICE GARANTIES CONTROLLER Запрос рекламации с id {}", id);
+        GarantRequestDto requestDto = garantService.getGarantiesDtoById(id);
+        log.info("<--- GARANTIESSERVICE GARANTIES CONTROLLER Успешный вывод рекламации {}",requestDto);
+        return requestDto;
+    }
+
+    @PatchMapping
+    public GarantRequestDto updateRequest(@RequestBody GarantRequestDto request) {
+        log.info("<--- GARANTIESSERVICE Попытка обновления рекламации {}", request);
+        GarantRequestDto requestDto = garantService.updateGarantRequest(request);
+        log.info("<--- GARANTIESSERVICE Рекламация обновлена {}", requestDto);
+        return request;
+    }
 }

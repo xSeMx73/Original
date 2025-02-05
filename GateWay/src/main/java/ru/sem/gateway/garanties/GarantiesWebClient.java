@@ -51,4 +51,34 @@ public class GarantiesWebClient {
                 .retrieve()
                 .bodyToFlux(GarantResponseDto.class);
     }
+
+    public GarantRequestDto getGarantiesById(int id) {
+        log.info("<--- GATEWAY WEBCLIENT Запрос рекламаций с id {}", id);
+        return webClient
+                .get()
+                .uri(url + "/garanties/" + id)
+                .retrieve()
+                .bodyToMono(GarantRequestDto.class)
+                .block();
+    }
+
+    public GarantRequestDto updateGarantRequest(GarantRequestDto request) {
+        log.info("<--- GATEWAY WEBCLIENT Обновление рекламации {}", request);
+        return webClient
+                .patch()
+                .uri(url + "/garanties")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(request))
+                .exchangeToMono(orderResponse -> {
+                    if (orderResponse.statusCode().is5xxServerError()) {
+                        return Mono.error(new RuntimeException("Server Error"));
+                    } else if (orderResponse.statusCode().is4xxClientError()) {
+                        return Mono.error(new RuntimeException("Client Error"));
+                    } else {
+                        return orderResponse.bodyToMono(GarantRequestDto.class);
+                    }
+                })
+                .block();
+    }
+
 }

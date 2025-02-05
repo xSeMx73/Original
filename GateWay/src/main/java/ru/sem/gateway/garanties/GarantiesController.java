@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -33,6 +34,23 @@ public class GarantiesController {
         Flux<GarantResponseDto> flux = garantiesWebClient.getGarantResponseList();
         log.info("<--- GATEWAY GARANTIES CONTROLLER попытка запроса рекламаций {}", flux.buffer().collectList().block());
         return garantiesWebClient.getGarantResponseList();
+    }
+
+    @GetMapping("/{id}")
+    public GarantRequestDto getRequestById(@PathVariable int id) {
+        log.info("<--- GATEWAY GARANTIES CONTROLLER Запрос рекламации с id {}", id);
+        GarantRequestDto requestDto = garantiesWebClient.getGarantiesById(id);
+        log.info("<--- GATEWAY GARANTIES CONTROLLER Успешный вывод рекламации {}",requestDto);
+        return requestDto;
+
+    }
+
+    @PatchMapping
+    public ResponseEntity<GarantRequestDto> updateRequest(@RequestBody GarantRequestDto request) {
+        log.info("<--- GATEWAY GARANTIES CONTROLLER попытка обновления рекламации {}", request);
+        GarantRequestDto requestDto = garantiesWebClient.updateGarantRequest(request);
+        log.info("<--- GATEWAY GARANTIES CONTROLLER рекламации обновлена {}", requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(requestDto);
     }
 
 }
