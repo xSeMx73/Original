@@ -101,6 +101,7 @@ public class OrderBookService {
                 .queryParam("Date", date);
 
         try {
+            Thread.sleep(100);
             String response = restTemplate.getForObject(builder.toUriString(), String.class);
             if (response != null) {
                 return Integer.valueOf(response.trim());
