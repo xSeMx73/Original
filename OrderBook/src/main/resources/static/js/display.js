@@ -46,6 +46,10 @@ function displayOrders(orders) {
     orders.forEach(order => {
         const row = document.createElement('tr');
 
+        if (order.isDelivered) {
+            row.style.backgroundColor = 'lightgreen'; // Установить светло-зеленый цвет для доставленных заказов
+        }
+
         const cells = [
             order.article,
             order.productName,

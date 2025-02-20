@@ -2,12 +2,15 @@ package ru.sem.gateway.garanties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -51,6 +54,32 @@ public class GarantiesController {
         GarantRequestDto requestDto = garantiesWebClient.updateGarantRequest(request);
         log.info("<--- GATEWAY GARANTIES CONTROLLER рекламации обновлена {}", requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(requestDto);
+    }
+
+    @GetMapping("/zakaz/{id}/{normHours}/{price}")
+    public ResponseEntity<byte[]> generateZakaz(@PathVariable Long id,
+                                                       @PathVariable Long normHours,
+                                                       @PathVariable Long price,
+                                                       @RequestHeader String job) {
+        log.info("<--- GATEWAY GARANTIES CONTROLLER Запрос заказ-наряда по рекламации с id {}", id);
+        byte[] zakaz = garantiesWebClient.createZakaz(id, normHours, price, job);
+        log.info("<--- GATEWAY GARANTIES CONTROLLER Заказ-наряд по рекламации с id {} сформирован", id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
+        headers.setContentDispositionFormData("attachment", "modified.xlsx");
+
+       return new ResponseEntity<>(zakaz, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/defekt/{id}")
+    public ResponseEntity<byte[]> generateDefekt(@PathVariable Long id) throws IOException {
+        log.info("<--- GATEWAY GARANTIES CONTROLLER Запрос акта-дефектовки по рекламации с id {}", id);
+        byte[] defekt = garantiesWebClient.createDefekt(id);
+        log.info("<--- GATEWAY GARANTIES CONTROLLER Акт-дефектовки по рекламации с id {} сформирован", id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
+        headers.setContentDispositionFormData("attachment", "defekt.docx");
+        return new ResponseEntity<>(defekt, headers, HttpStatus.OK);
     }
 
 }

@@ -8,9 +8,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.sem.gateway.orderBook.OrderResponseDto;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -81,4 +78,24 @@ public class GarantiesWebClient {
                 .block();
     }
 
+    public byte[] createZakaz(Long id, Long normHours, Long price, String job) {
+        log.info("<--- GATEWAY WEBCLIENT Запрос заказ-наряда по рекламации с id {}", id);
+        return webClient
+                .get()
+                .uri(url + "/garanties/zakaz/" + id + "/"+ normHours + "/" + price)
+                .header("job", job)
+                .retrieve()
+                .bodyToMono(byte[].class)
+                .block();
+    }
+
+    public byte[] createDefekt(Long id) {
+        log.info("<--- GATEWAY WEBCLIENT Запрос акта-дефектовки по рекламации с id {}", id);
+        return webClient
+                .get()
+                .uri(url + "/garanties/defekt/" + id)
+                .retrieve()
+                .bodyToMono(byte[].class)
+                .block();
+    }
 }

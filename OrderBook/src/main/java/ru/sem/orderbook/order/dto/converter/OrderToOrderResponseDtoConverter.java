@@ -25,6 +25,7 @@ public class OrderToOrderResponseDtoConverter implements Converter<Order, OrderR
                 .quantity(source.getQuantity())
                 .createTime(source.getCreateTime())
                 .deliveryTime(source.getDeliveryTime())
+                .isDelivered(source.getIsDelivered())
                 .build();
     }
 }

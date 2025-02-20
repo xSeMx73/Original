@@ -10,6 +10,7 @@ import ru.sem.garantiesservice.exception.NotFoundException;
 import ru.sem.garantiesservice.model.GarantRequest;
 import ru.sem.garantiesservice.repository.GarantRepository;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,8 @@ public class GarantService {
     @Qualifier("mvcConversionService")
     private final ConversionService converter;
     private final GarantRepository garantRepository;
+    private final PrintZakazService printZakazService;
+    private final PrintDefektService printDefektService;
 
     public GarantRequestDto createGarantRequest(GarantRequestDto request) {
         if (request != null){
@@ -41,7 +44,7 @@ public class GarantService {
                 .toList();
     }
 
-    public GarantRequestDto getGarantiesDtoById(long id) {
+    public GarantRequestDto getGarantiesDtoById(Long id) {
         return converter.convert(garantRepository.findById(id)
                 .orElseThrow(() ->
                         new NotFoundException("Рекламация с id " + id + " не найдена")), GarantRequestDto.class);
@@ -65,8 +68,18 @@ public class GarantService {
         return newRequest;
     }
 
-    private GarantRequest getGarantiesById(long id) {
+    private GarantRequest getGarantiesById(Long id) {
         return garantRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Рекламация с id " + id + " не найдена"));
+    }
+
+    public byte[] createZakaz(Long id, Long normHours, Long price, String job) throws IOException {
+        GarantRequest request = getGarantiesById(id);
+        return printZakazService.createZakaz(request, normHours, price, job);
+    }
+
+    public byte[] createDefekt(Long id) {
+        GarantRequest request = getGarantiesById(id);
+        return printDefektService.createDefekt(request);
     }
 }

@@ -47,4 +47,6 @@ public class Order {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime createTime = LocalDateTime.now();
 
+    Boolean isDelivered = false;
+
 }

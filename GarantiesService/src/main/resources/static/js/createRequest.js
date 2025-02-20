@@ -14,12 +14,13 @@ function createRequest() {
 
                 <label for="clientPhone">Номер телефона клиента:</label>
                 <input type="tel" id="clientPhone" name="clientPhone" required>
+                
+                <label for="transportBrand">Производитель ТС:</label>
+                <input type="text" id="transportBrand" name="transportBrand" required>
 
                 <label for="transportModel">Модель ТС:</label>
                 <input type="text" id="transportModel" name="transportModel" required>
 
-                <label for="transportBrand">Производитель ТС:</label>
-                <input type="text" id="transportBrand" name="transportBrand" required>
 
                 <label for="transportYear">Год выпуска ТС:</label>
                 <input type="number" id="transportYear" name="transportYear" required>

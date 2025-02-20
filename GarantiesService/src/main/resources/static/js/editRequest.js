@@ -1,8 +1,10 @@
+let reqId;
+
 function openEditRequestModal(id) {
 
     closeModalEdit()
     const url = `http://192.168.1.135:9090/garanties/${id}`;
-
+    reqId = id;
     const modal = document.createElement('div');
     modal.id = 'modal-edit';
     modal.className = 'modal-edit';
@@ -16,17 +18,17 @@ function openEditRequestModal(id) {
             <input type="text" id="clientName" name="clientName" required/><br/><br/>
             <label for="clientPhone">Телефон клиента:</label>
             <input type="tel" id="clientPhone" name="clientPhone" required/><br/><br/>
+            <label for="transportBrand">Марка транспорта:</label>
+            <input type="text" id="transportBrand" name="transportBrand" required/><br/><br/>
             <label for="transportModel">Модель транспорта:</label>
             <input type="text" id="transportModel" name="transportModel" required/><br/><br/>
-            <label for="transportBrand">Бренд транспорта:</label>
-            <input type="text" id="transportBrand" name="transportBrand" required/><br/><br/>
-            <label for="transportYear">Год транспорта:</label>
+            <label for="transportYear">Год выпуска:</label>
             <input type="number" id="transportYear" name="transportYear" required/><br/><br/>
             <label for="gosNumber">Госномер:</label>
             <input type="text" id="gosNumber" name="gosNumber" required/><br/><br/>
-            <label for="mileageStart">Пробег на старте:</label>
+            <label for="mileageStart">Пробег при установке:</label>
             <input type="number" id="mileageStart" name="mileageStart" required/><br/><br/>
-            <label for="mileageEnd">Пробег на окончании:</label>
+            <label for="mileageEnd">Пробег при снятии:</label>
             <input type="number" id="mileageEnd" name="mileageEnd" required/><br/><br/>
             <label for="vin">VIN:</label>
             <input type="text" id="vin" name="vin" required/><br/><br/>
@@ -44,7 +46,7 @@ function openEditRequestModal(id) {
             <input type="text" id="partDealer" name="partDealer" required/><br/><br/>
             <label for="faultDescription">Описание неисправности:</label>
             <input type="text" id="faultDescription" name="faultDescription"/><br/><br/>
-            <label for="createManager">Менеджер по созданию:</label>
+            <label for="createManager">Менеджер:</label>
             <input type="text" id="createManager" name="createManager" required/><br/><br/>
             <label for="status">Статус:</label>
             <select id="status" name="status" required>
@@ -57,8 +59,8 @@ function openEditRequestModal(id) {
             </select><br/><br/>
             <button type="button" id="closeModalButton" onClick="closeModalEdit()">Закрыть</button>
             <button type="submit">Сохранить</button>
-            <button type="button" onClick="printZakaz(id)">Заказ-наряд</button>
-            <button type="button" onClick="printDefect(id)">Дефектовка</button>
+            <button type="button" onClick="printZakaz(reqId)">Заказ-наряд</button>
+            <button type="button" onClick="printDefect(reqId)">Дефектовка</button>
         </form>
     </div>
 `;
@@ -167,4 +169,46 @@ function saveEditRequest(updatedRequest) {
             alert('Произошла ошибка: ' + error.message); // Выводим ошибку
         });
 }
+
+function printZakaz(reqId) {
+    let firstNumber = prompt("Введите количество норма-часов:");
+    let secondNumber = prompt("Введите цену норма-часа:");
+    let job = prompt("Введите наименование выполненных работ");
+
+    const url = `http://192.168.1.135:9090/garanties/zakaz/${reqId}/${firstNumber}/${secondNumber}`;
+
+    fetch(url, {headers: {'job': encodeURIComponent(job)}})
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'modified.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+}
+
+function printDefect(reqId) {
+    const url = `http://192.168.1.135:9090/garanties/defekt/${reqId}`;
+
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'defekt.docx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+}
+
+
+
+
 

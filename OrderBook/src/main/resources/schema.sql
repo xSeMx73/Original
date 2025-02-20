@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS orders
     info          VARCHAR(255),
     manager       VARCHAR(255),
     delivery_time DATE,
-    create_time   TIMESTAMP(0)
+    create_time   TIMESTAMP(0),
+    is_delivered   BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS pend_orders
