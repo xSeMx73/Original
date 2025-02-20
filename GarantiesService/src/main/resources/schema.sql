@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS garant
+(
+    id                 BIGINT NOT NULL,
+    client_name        VARCHAR(255),
+    client_phone       BIGINT,
+    transport_model    VARCHAR(255),
+    transport_brand    VARCHAR(255),
+    transport_year     INTEGER,
+    gos_number         VARCHAR(255),
+    mileage_start      BIGINT,
+    mileage_end        BIGINT,
+    vin                VARCHAR(255),
+    date_start_repair  date,
+    date_remove_part   date,
+    part_article       VARCHAR(255),
+    part_brand         VARCHAR(255),
+    part_name          VARCHAR(255),
+    part_dealer        VARCHAR(255),
+    fault_description  VARCHAR(2040),
+    create_date        date,
+    create_manager     VARCHAR(255),
+    status             VARCHAR(255),
+    date_update_status date,
+    CONSTRAINT pk_garant PRIMARY KEY (id)
+);

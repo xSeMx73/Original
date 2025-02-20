@@ -36,4 +36,6 @@ public class OrderResponseDto {
     LocalDate deliveryTime;
 
     LocalDateTime createTime;
+
+    Boolean isDelivered;
 }

@@ -38,4 +38,6 @@ public class OrderResponseDto {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime createTime;
+
+    Boolean isDelivered;
 }

@@ -46,6 +46,10 @@ function displayOrders(orders) {
     orders.forEach(order => {
         const row = document.createElement('tr');
 
+        if (order.isDelivered) {
+            row.style.backgroundColor = 'lightgreen'; // Установить светло-зеленый цвет для доставленных заказов
+        }
+
         const cells = [
             order.article,
             order.productName,
@@ -72,69 +76,3 @@ function displayOrders(orders) {
     // Добавляем таблицу в контейнер
     ordersList.appendChild(table);
 }
-/*
-function setupPagination(data) {
-    const paginationControls = document.getElementById('paginationControls');
-    paginationControls.innerHTML = ''; // Очистить предыдущие элементы пагинации
-
-    const totalPages = data.totalPages; // Общее количество страниц
-
-    // Первая страница
-    const firstButton = document.createElement('button');
-    firstButton.textContent = 'Первая';
-    firstButton.disabled = currentPage === 0; // Отключаем, если это первая страница
-    firstButton.onclick = () => {
-        currentPage = 0;
-        loadOrders(currentPage);
-    };
-    paginationControls.appendChild(firstButton);
-
-    // Предыдущая страница
-    const prevButton = document.createElement('button');
-    prevButton.textContent = 'Предыдущая';
-    prevButton.disabled = currentPage === 0; // Отключаем, если это первая страница
-    prevButton.onclick = () => {
-        if (currentPage > 0) {
-            currentPage--;
-            loadOrders(currentPage);
-        }
-    };
-    paginationControls.appendChild(prevButton);
-
-    // Создаем страницы
-    for (let i = 0; i < totalPages; i++) {
-        const button = document.createElement('button');
-        button.textContent = i + 1; // Нумерация страниц
-        button.className = (i === currentPage) ? 'active' : ''; // Добавляем активный класс
-        button.onclick = () => {
-            currentPage = i; // Устанавливаем текущую страницу
-            loadOrders(currentPage); // Загружаем заказы для новой страницы
-        };
-        paginationControls.appendChild(button);
-    }
-
-    // Следующая страница
-    const nextButton = document.createElement('button');
-    nextButton.textContent = 'Следующая';
-    nextButton.disabled = currentPage === totalPages - 1; // Отключаем, если это последняя страница
-    nextButton.onclick = () => {
-        if (currentPage < totalPages - 1) {
-            currentPage++;
-            loadOrders(currentPage);
-        }
-    };
-    paginationControls.appendChild(nextButton);
-
-    // Последняя страница
-    const lastButton = document.createElement('button');
-    lastButton.textContent = 'Последняя';
-    lastButton.disabled = currentPage === totalPages - 1; // Отключаем, если это последняя страница
-    lastButton.onclick = () => {
-        currentPage = totalPages - 1;
-        loadOrders(currentPage);
-    };
-    paginationControls.appendChild(lastButton);
-}
-
-// Инициализация первой загрузки заказов
-loadOrders(currentPage);*/

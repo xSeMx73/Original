@@ -24,6 +24,7 @@ public class ClientDto {
     String nickName;
 
     Long phone;
+
     @Email
     String email;
 

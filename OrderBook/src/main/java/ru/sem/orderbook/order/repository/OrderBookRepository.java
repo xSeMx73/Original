@@ -35,4 +35,10 @@ public interface OrderBookRepository extends JpaRepository<Order, Long> {
             "and o.deliveryTime = current date " +
             "order by o.dealer")
     List<Order> findSortByDealerOrders();
+
+    @Query("select o " +
+            "from Order AS o where o.isDelivered = false " +
+            "order by o.createTime desc limit 30")
+    List<Order> findOrdersForUpdateDelivery();
+
 }
