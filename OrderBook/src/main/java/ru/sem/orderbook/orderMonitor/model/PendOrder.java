@@ -8,6 +8,7 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name = "pend_orders")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -37,7 +38,7 @@ public class PendOrder {
 
     String manager;
 
-    LocalDate inputData;
+    LocalDateTime inputData;
 
     LocalDate returnData;
 

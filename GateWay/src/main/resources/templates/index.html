@@ -13,32 +13,35 @@
       align-items: flex-start; /* Устанавливаем выравнивание по верхнему краю */
       height: 100vh;
       margin: 0;
-      background-image: url('/images/logo.jpg');
+      background-image: url('/images/logoBlack.png');
       background-size: contain; /* Заполняет весь экран */
       background-position: left; /* Центрирует изображение */
       background-repeat: no-repeat; /* Не повторяет изображение */
-      background-color: white; /* Цвет фона, если изображение не загрузится */
+      background-color: #474242; /* Цвет фона, если изображение не загрузится */
     }
     .container {
-      text-align: center;
-      color: black; /* Измените цвет текста для лучшей видимости на фоне */
-      margin-right: 300px; /* Добавьте отступ справа для лучшего расположения */
-      margin-top: 20px; /* Добавляем отступ сверху, если нужно */
+      text-align: right; /* Устанавливаем выравнивание текста вправо */
+      color: #090909; /* Цвет текста для лучшей видимости */
+      margin-right: 100px; /* Отступ справа для лучшего расположения */
+      margin-top: 20px; /* Отступ сверху */
+      display: flex; /* Используем flex-контейнер для вертикального размещения */
+      flex-direction: column; /* Располагаем элементы в колонку */
+      gap: 10px; /* Задаем расстояние между кнопками */
     }
     button {
       padding: 15px 30px;
       font-size: 16px;
-      color: white;
-      background-color: #007bff;
+      color: #090909;
+      background-color: #fa7e11;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s;
-      margin: 10px 0; /* Добавляем отступ между кнопками */
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #f3e379;
     }
+
   </style>
 </head>
 <body>

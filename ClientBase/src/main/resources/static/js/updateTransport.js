@@ -1,8 +1,6 @@
 
 
 function updateTransport(transport, clientID) {
-
-
     document.getElementById('brand-name-update').value = transport.brandName || '';
     document.getElementById('model-update').value = transport.model || '';
     document.getElementById('VIN-update').value = transport.vin || '';
@@ -10,15 +8,8 @@ function updateTransport(transport, clientID) {
     document.getElementById('year-update').value = transport.year || '';
     document.getElementById('info-update').value = transport.addInform || '';
 
-    // Отображение модального окна
     const modalUpdateTransport = document.getElementById('edit-transport-modal');
     modalUpdateTransport.style.display = 'block';
-
-    // Закрытие модального окна при нажатии на кнопку закрытия
-    const closeButtonUpdateTransport = document.querySelector('.close-button');
-    closeButtonUpdateTransport.onclick = function() {
-        modalUpdateTransport.style.display = 'none';
-    };
 
     // Закрытие модального окна при нажатии вне его
     window.onclick = function(event) {
@@ -27,11 +18,10 @@ function updateTransport(transport, clientID) {
         }
     };
 
-    // Обработка отправки формы
+    // Перемещаем обработчик отправки формы в начало функции
     const formUpdateTransport = document.getElementById('edit-transport-form');
     formUpdateTransport.onsubmit = function(eventUpdateTransport) {
         eventUpdateTransport.preventDefault();
-        // Сохраните изменения клиента
         const updatedTransport = {
             id: transport.id,
             brandName: document.getElementById('brand-name-update').value,
@@ -48,8 +38,6 @@ function updateTransport(transport, clientID) {
 }
 
 function saveTransportChanges(updatedTransport, clientID) {
-
-
     fetch('http://192.168.1.135:9090/transport', {
         method: 'PATCH',
         headers: {
@@ -58,21 +46,23 @@ function saveTransportChanges(updatedTransport, clientID) {
         body: JSON.stringify(updatedTransport),
     })
         .then(response => {
-            // Проверка, что ответ успешен (статус 200-299)
             if (!response.ok) {
                 throw new Error('Некорректно заполнены поля');
             }
-            return response.json(); // Возврат JSON-ответа
+            return response.json();
         })
         .then(data => {
-            if (data.id) { // Проверяем, что ID транспорта действительно присутствует
-                returnClientAfterCreate(clientID); // Передаем ID в функцию
+            if (data.id) {
+                returnClientAfterCreate(clientID);
             } else {
                 console.error('ID транспорта не найден в ответе:', data);
             }
         })
         .catch((error) => {
             console.error('Ошибка:', error);
-            alert('Произошла ошибка: ' + error.message); // Выводим ошибку
+            alert('Произошла ошибка: ' + error.message);
         });
+}
+function closeEditTransportModal() {
+    document.getElementById('edit-transport-modal').style.display = 'none';
 }

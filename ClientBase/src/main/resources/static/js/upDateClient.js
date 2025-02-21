@@ -15,11 +15,7 @@ function updateClient(client) {
     const modal = document.getElementById('edit-client-modal');
     modal.style.display = 'block';
 
-    // Закрытие модального окна при нажатии на кнопку закрытия
-    const closeButton = document.querySelector('.close-button');
-    closeButton.onclick = function() {
-        modal.style.display = 'none';
-    };
+
 
     // Закрытие модального окна при нажатии вне его
     window.onclick = function(event) {
@@ -78,4 +74,8 @@ function saveClientChanges(updatedClient) {
             console.error('Ошибка:', error);
             alert('Произошла ошибка: ' + error.message); // Выводим ошибку
         });
+}
+
+function closeEditClientModal() {
+    document.getElementById('edit-client-modal').style.display = 'none';
 }

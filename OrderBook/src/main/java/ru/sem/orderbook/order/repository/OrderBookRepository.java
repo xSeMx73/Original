@@ -38,6 +38,12 @@ public interface OrderBookRepository extends JpaRepository<Order, Long> {
 
     @Query("select o " +
             "from Order AS o where o.isDelivered = false " +
+            "and o.info not ilike 'склад' " +
+            "and o.info not ilike 'скл' " +
+            "and o.info not ilike 'crkfl' " +
+            "and o.info not ilike 'crk' " +
+            "and o.info is not null " +
+            "and o.dealer not ilike 'наш склад г.Ульяновск' " +
             "order by o.createTime desc limit 30")
     List<Order> findOrdersForUpdateDelivery();
 

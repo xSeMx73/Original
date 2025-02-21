@@ -13,6 +13,8 @@ import ru.sem.orderbook.order.dto.OrderResponseDto;
 import ru.sem.orderbook.order.model.Order;
 import ru.sem.orderbook.order.repository.OrderBookRepository;
 import ru.sem.orderbook.order.service.orderBuilder.OrderBuilder;
+import ru.sem.orderbook.orderMonitor.model.PendOrder;
+import ru.sem.orderbook.orderMonitor.repository.PendOrderRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +32,7 @@ public class OrderBookService {
     private final OrderBuilder orderBuilder;
     private final OrderBookRepository orderRepository;
     private final RestTemplate restTemplate = new RestTemplate();
+    private final PendOrderRepository pendOrderRepository;
 
 
     public OrderResponseDto createOrder(OrderDto orderDto) {
@@ -75,6 +78,7 @@ public class OrderBookService {
              if (newCount > oldCount) {
                order.setIsDelivered(true);
                orderRepository.save(order);
+               pendOrderRepository.save(Objects.requireNonNull(converter.convert(order, PendOrder.class)));
              }
            }
         }

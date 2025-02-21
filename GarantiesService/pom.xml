@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.sem</groupId>
 	<artifactId>GarantiesService</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>GarantiesService</name>
 	<description>GarantiesService</description>
 

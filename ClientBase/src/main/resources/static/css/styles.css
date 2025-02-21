@@ -1,0 +1,208 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #afaeae;
+    padding: 50px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.input-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    margin-left: 10px;
+}
+
+.input-label {
+    display: inline-block;
+}
+.styled-button {
+    background-color: #4CAF50; /* Зеленый фон */
+    color: white; /* Белый текст */
+    border: none; /* Убираем стандартную обводку */
+    padding: 15px 32px; /* Отступы: 15px сверху и снизу, 32px слева и справа */
+    text-align: center; /* Выравнивание текста по центру */
+    text-decoration: none; /* Убираем подчеркивание текста */
+    display: inline-block; /* Позволяет задавать размеры */
+    font-size: 16px; /* Размер шрифта */
+    margin: 4px 2px; /* Поля вокруг кнопки */
+    cursor: pointer; /* Курсор-указатель при наведении */
+    border-radius: 5px; /* Закругляем углы */
+    transition: background 0.3s, transform 0.2s; /* Плавные переходы при наведении */
+}
+
+.styled-button:hover {
+    background-color: #45a049; /* Более темный зеленый при наведении */
+    transform: scale(1.05); /* Немного увеличиваем кнопку при наведении */
+}
+
+.styled-button:active {
+    transform: scale(0.95); /* Уменьшаем кнопку при нажатии */
+}
+
+.submit-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    white-space: nowrap;
+    min-width: 100px;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000; /* Убедитесь, что он выше других элементов */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Темный фон с прозрачностью */
+}
+
+.modal-content {
+    position: relative;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%); /* Центрируем по вертикали */
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px; /* Если хотите, чтобы углы были закругленными */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.modal-form-group label {
+    width: 150px; /* Ширина метки для выравнивания */
+    margin-right: 10px; /* Расстояние между меткой и полем ввода */
+}
+
+.modal-form-group input {
+    flex: 1; /* Поле ввода занимает оставшееся пространство */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content-confirm {
+
+    position: relative;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%); /* Центрируем по вертикали */
+    width: 90%;
+    max-width: 150px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px; /* Если хотите, чтобы углы были закругленными */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.update-btn {
+    background: conic-gradient(#efe486, #aca609, #f4edaa);
+    color: black; /* Цвет текста */
+    padding: 9px 11px; /* Отступы */
+    border: none; /* Убираем стандартные границы */
+    border-radius: 5px; /* Скругляем углы */
+    font-size: 10px; /* Размер шрифта */
+    cursor: pointer; /* Курсор при наведении */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Объем */
+    transition: transform 0.2s; /* Плавный переход */
+}
+
+.update-btn:hover {
+    transform: translateY(-2px); /* Подъем при наведении */
+}
+
+.update-btn:active {
+    transform: translateY(0); /* Возврат при нажатии */
+}
+.update-btn i {
+    font-size: 18px; /* Размер значка */
+}
+
+.delete-btn {
+    background: conic-gradient( #f16b6b, #ff1602, #f36f6f); /* Градиент от темного к светлому */
+    border: none; /* Убираем границу */
+    color: white; /* Цвет текста */
+    padding: 9px 11px; /* Отступы */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Курсор при наведении */
+    font-size: 10px; /* Размер шрифта */
+    transition: background 0.3s; /* Плавный переход фона */
+}
+
+.delete-btn:hover {
+    background: linear-gradient(to right, #c62828, #e53935, #c62828); /* Более яркий градиент при наведении */
+}
+
+.delete-btn i {
+    font-size: 18px; /* Размер значка */
+}
+
+.add-transport-btn {
+    border-radius: 5px; /* Закругленные углы */
+    background: linear-gradient(to right, #89d57b, #32ba15, #578f4b);
+    border: none;
+}
+
+.add-transport-btn:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+}
