@@ -1,0 +1,125 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #cdcccc;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center; /* Центрируем текст заголовка */
+    margin: 1px; /* Отступы у заголовка */
+}
+.input-container {
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+table {
+    border-collapse: collapse; /* Схлопывание границ */
+    width: 100%; /* Ширина таблицы */
+}
+
+th, td {
+    border: 1px solid black; /* Одна граница для ячеек */
+    padding: 8px; /* Отступы в ячейках */
+    text-align: left; /* Выравнивание текста влево */
+}
+/* Стили для поля ввода */
+#filterInput {
+    margin: 10px 0; /* Отступы сверху и снизу */
+    padding: 8px; /* Паддинг для поля ввода */
+    width: 99%; /* Ширина под 100% */
+}
+
+.supplier-title {
+    text-align: center; /* Центрируем текст */
+    font-size: 1em; /* Увеличиваем размер шрифта */
+    margin: 15px 0; /* Добавляем отступы сверху и снизу */
+    font-weight: bold; /* Делаем текст жирным */
+}
+#printButton { /*кнопка печати*/
+    display: none; /* Скрыть кнопку по умолчанию */
+    margin-top: 20px; /* Отступ сверху для кнопки */
+}
+
+#viewOrdersButton {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #090909;
+    cursor: pointer;
+    font-size: 15px; /* Размер шрифта */
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding: 9px 18px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: box-shadow .2s;
+}
+
+#viewOrdersButton:hover {
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}
+
+#viewClientsOrdersButton {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #0b0a0a;
+    cursor: pointer;
+    font-size: 15px; /* Размер шрифта */
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding: 9px 18px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: box-shadow .2s;
+}
+
+#viewClientsOrdersButton:hover {
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}
+
+#sortByDealerOrdersButton {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #040303;
+    cursor: pointer;
+    font-size: 15px; /* Размер шрифта */
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding: 9px 18px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: box-shadow .2s;
+}
+
+#sortByDealerOrdersButton:hover {
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}
+
+#printButton {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #090909;
+    cursor: pointer;
+    font-size: 15px; /* Размер шрифта */
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding: 9px 18px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: box-shadow .2s;
+}
+
+#printButton:hover {
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}
+

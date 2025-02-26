@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class PendOrder {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    Long id;
 
    String article;

@@ -50,17 +50,23 @@ h1 {
 }
 
 .submit-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #0b0a0a;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px; /* Размер шрифта */
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding: 9px 18px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: box-shadow .2s;
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
 }
 
 table {
@@ -157,10 +163,10 @@ th {
 .update-btn {
     background: conic-gradient(#efe486, #aca609, #f4edaa);
     color: black; /* Цвет текста */
-    padding: 9px 11px; /* Отступы */
+    padding: 8px 8px; /* Отступы */
     border: none; /* Убираем стандартные границы */
     border-radius: 5px; /* Скругляем углы */
-    font-size: 10px; /* Размер шрифта */
+    font-size: 8px; /* Размер шрифта */
     cursor: pointer; /* Курсор при наведении */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Объем */
     transition: transform 0.2s; /* Плавный переход */
@@ -174,17 +180,17 @@ th {
     transform: translateY(0); /* Возврат при нажатии */
 }
 .update-btn i {
-    font-size: 18px; /* Размер значка */
+    font-size: 15px; /* Размер значка */
 }
 
 .delete-btn {
     background: conic-gradient( #f16b6b, #ff1602, #f36f6f); /* Градиент от темного к светлому */
     border: none; /* Убираем границу */
     color: white; /* Цвет текста */
-    padding: 9px 11px; /* Отступы */
+    padding: 8px 8px; /* Отступы */
     border-radius: 5px; /* Скругленные углы */
     cursor: pointer; /* Курсор при наведении */
-    font-size: 10px; /* Размер шрифта */
+    font-size: 8px; /* Размер шрифта */
     transition: background 0.3s; /* Плавный переход фона */
 }
 
@@ -193,7 +199,7 @@ th {
 }
 
 .delete-btn i {
-    font-size: 18px; /* Размер значка */
+    font-size: 15px; /* Размер значка */
 }
 
 .add-transport-btn {

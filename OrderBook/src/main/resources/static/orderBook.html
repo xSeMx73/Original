@@ -1,38 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
-<style>
-    table {
-        border-collapse: collapse; /* Схлопывание границ */
-        width: 100%; /* Ширина таблицы */
-    }
-
-    th, td {
-        border: 1px solid black; /* Одна граница для ячеек */
-        padding: 8px; /* Отступы в ячейках */
-        text-align: left; /* Выравнивание текста влево */
-    }
-    /* Стили для поля ввода */
-    #filterInput {
-        margin: 10px 0; /* Отступы сверху и снизу */
-        padding: 8px; /* Паддинг для поля ввода */
-        width: 100%; /* Ширина под 100% */
-    }
-
-    .supplier-title {
-        text-align: center; /* Центрируем текст */
-        font-size: 1em; /* Увеличиваем размер шрифта */
-        margin: 15px 0; /* Добавляем отступы сверху и снизу */
-        font-weight: bold; /* Делаем текст жирным */
-    }
-    #printButton { /*кнопка печати*/
-        display: none; /* Скрыть кнопку по умолчанию */
-        margin-top: 20px; /* Отступ сверху для кнопки */
-    }
-</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="cssBook/styles.css">
     <style>
     @media print {
        @page {
@@ -52,13 +25,15 @@
 </head>
 <body>
 <h1>Сервис заказов</h1>
+<div class="input-container">
 <button id="viewOrdersButton">Все заказы</button>
-<button id="viewClientsOrdersButton">Заказные позиции</button>
+<button id="viewClientsOrdersButton">Заказы клиентов</button>
 <button id="sortByDealerOrdersButton">Кнопка для завхоза</button>
-<button id="printButton" onclick="printTable()">Распечатать</button>
-
+    <button id="printButton" onclick="printTable()">
+        <i class="fas fa-print"></i>
+    </button>
 <input type="text" id="filterInput" placeholder="Поиск по Доп.информации, Наименованию и Артикулу" style="display: none;"> <!-- Поле ввода для фильтрации -->
-
+</div>
 <div id="ordersList"></div> <!-- Контейнер для отображения списка всех заказов -->
 <div id="clientsOrdersList"></div> <!-- Контейнер для отображения заказных товаров -->
 <div id="sortOrdersList"></div> <!-- Контейнер для отображения списка отсортированных заказов -->

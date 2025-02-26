@@ -32,7 +32,7 @@ public class FavoritOrderBuilder {
            return LocalDate.parse(stringDate[3], formatter);
        }
        if (LocalDate.now().getDayOfWeek() == DayOfWeek.SATURDAY ||
-               LocalTime.now().isAfter(LocalTime.of(15, 0)) ) {
+               LocalTime.now().isAfter(LocalTime.of(16, 30)) ) {
         return LocalDate.now().plusDays(2);
        }
        return LocalDate.now().plusDays(1);

@@ -15,6 +15,7 @@ public class OrderToPendOrderConverter implements Converter<Order, PendOrder> {
     @Override
     public PendOrder convert(Order source) {
         PendOrder pendOrder = new PendOrder();
+        pendOrder.setId(source.getId());
         pendOrder.setManager(source.getManager());
         pendOrder.setInfo(source.getInfo());
         pendOrder.setPrice(source.getPrice());

@@ -14,9 +14,11 @@ import ru.sem.orderbook.orderMonitor.model.PendOrder;
 import ru.sem.orderbook.orderMonitor.model.ReturnReason;
 import ru.sem.orderbook.orderMonitor.repository.PendOrderRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 
 @Slf4j
@@ -31,7 +33,7 @@ public class PendOrderService {
     private final PendOrderRepository pendOrderRepository;
     private final OrderBookService orderBookService;
 
-  /*  @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     @PostConstruct
     private void updatePendOrderTable() {
     List<PendOrder> pendOrders = orderBookRepository.findClientsOrders()
@@ -40,7 +42,7 @@ public class PendOrderService {
             .map(s -> converter.convert(s, PendOrder.class))
             .toList();
         pendOrderRepository.saveAll(pendOrders);
-    }*/
+    }
 
     public List<PendOrderDto> getPendOrders() {
         return pendOrderRepository.findAllWhereReasonIsNull().stream()
@@ -59,7 +61,7 @@ public class PendOrderService {
         return pendOrderRepository.findById(Long.valueOf(id))
                 .orElseThrow(NoSuchElementException::new);
     }
-    @PostConstruct
+  //  @PostConstruct
     @Scheduled(cron = "0 0 1 * * ?")
     private void autoSetReasonPendOrder() {
         long startTime = System.currentTimeMillis();

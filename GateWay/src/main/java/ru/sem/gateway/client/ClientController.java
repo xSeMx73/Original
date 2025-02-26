@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
-import ru.sem.clientbase.client.dto.ClientResponseDto;
+
 
 @Slf4j
 @RestController
