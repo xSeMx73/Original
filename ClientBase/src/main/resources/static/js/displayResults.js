@@ -27,7 +27,7 @@
 //////////////////
         // Кнопка для удаления клиента
         const deleteClientBtn = document.createElement('button');
-        deleteClientBtn.textContent = 'Удалить клиента';
+        deleteClientBtn.innerHTML = '<i class="fas fa-times"></i>';
         deleteClientBtn.classList.add('delete-btn');
 
         deleteClientBtn.addEventListener('click', () => {
@@ -42,7 +42,7 @@
 
         // Кнопка изменения клиента
         const updateClientBtn = document.createElement("button");
-        updateClientBtn.textContent = 'Редактировать клиента';
+        updateClientBtn.innerHTML = '<i class="fas fa-edit"></i>';
         updateClientBtn.classList.add('update-btn');
 
         updateClientBtn.addEventListener('click', () => {
@@ -118,7 +118,7 @@
 
             // Кнопка для удаления транспорта
             const deleteBtn = document.createElement('button');
-            deleteBtn.textContent = 'Удалить';
+            deleteBtn.innerHTML = '<i class="fas fa-times"></i>'; // используя Font Awesome
             deleteBtn.classList.add('delete-btn');
             deleteBtn.addEventListener('click', () => {
                 confirmDelete(transport.id, client.id);
@@ -131,13 +131,12 @@
 
             // Кнопка изменения транспорта
             const updateTransportBtn = document.createElement("button");
-            updateTransportBtn.textContent = 'Редактировать';
+            updateTransportBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Значок редактирования
             updateTransportBtn.classList.add('update-btn');
             const clientID = client.id;
             updateTransportBtn.addEventListener('click', () => {
                 updateTransport(transport, clientID);
             });
-
             deleteCell.appendChild(updateTransportBtn);
 
 

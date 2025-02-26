@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS orders
 
 CREATE TABLE IF NOT EXISTS pend_orders
 (
-    id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id           BIGINT PRIMARY KEY,
     article      VARCHAR(32),
     product_name VARCHAR(255),
     brand        VARCHAR(32),

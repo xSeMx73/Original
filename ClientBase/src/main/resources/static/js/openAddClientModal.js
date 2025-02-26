@@ -52,4 +52,6 @@ function submitClient() {
             console.error('Ошибка:', error);
             alert('Произошла ошибка: ' + error.message); // Выводим ошибку
         });
+
+
 }

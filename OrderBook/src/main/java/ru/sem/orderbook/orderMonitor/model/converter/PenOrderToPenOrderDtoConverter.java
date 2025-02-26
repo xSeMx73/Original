@@ -19,7 +19,7 @@ public class PenOrderToPenOrderDtoConverter implements Converter<PendOrder, Pend
                 .info(source.getInfo())
                 .price(source.getPrice())
                 .dealer(source.getDealer())
-                .inputData(source.getInputData())
+                .inputData(source.getInputData().toLocalDate())
                 .manager(source.getManager())
                 .productName(source.getProductName())
                 .quantity(source.getQuantity())

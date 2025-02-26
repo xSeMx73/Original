@@ -13,32 +13,40 @@
       align-items: flex-start; /* Устанавливаем выравнивание по верхнему краю */
       height: 100vh;
       margin: 0;
-      background-image: url('/images/logo.jpg');
+      background-image: url('/images/logoBlack.png');
       background-size: contain; /* Заполняет весь экран */
       background-position: left; /* Центрирует изображение */
       background-repeat: no-repeat; /* Не повторяет изображение */
-      background-color: white; /* Цвет фона, если изображение не загрузится */
+      background-color: #474242; /* Цвет фона, если изображение не загрузится */
     }
     .container {
-      text-align: center;
-      color: black; /* Измените цвет текста для лучшей видимости на фоне */
-      margin-right: 300px; /* Добавьте отступ справа для лучшего расположения */
-      margin-top: 20px; /* Добавляем отступ сверху, если нужно */
+      text-align: right; /* Устанавливаем выравнивание текста вправо */
+      color: #090909; /* Цвет текста для лучшей видимости */
+      margin-right: 100px; /* Отступ справа для лучшего расположения */
+      margin-top: 20px; /* Отступ сверху */
+      display: flex; /* Используем flex-контейнер для вертикального размещения */
+      flex-direction: column; /* Располагаем элементы в колонку */
+      gap: 10px; /* Задаем расстояние между кнопками */
     }
     button {
-      padding: 15px 30px;
-      font-size: 16px;
-      color: white;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
+      background-color: initial;
+      background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+      border-radius: 6px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+      color: #0b0a0a;
       cursor: pointer;
-      transition: background 0.3s;
-      margin: 10px 0; /* Добавляем отступ между кнопками */
+      font-size: 15px; /* Размер шрифта */
+      font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+      padding: 9px 18px;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: box-shadow .2s;
     }
     button:hover {
-      background-color: #0056b3;
+      box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
     }
+
   </style>
 </head>
 <body>

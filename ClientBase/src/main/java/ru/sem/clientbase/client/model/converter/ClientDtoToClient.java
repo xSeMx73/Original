@@ -13,6 +13,7 @@ public class ClientDtoToClient implements Converter<ClientDto, Client> {
     @Override
     public Client convert(ClientDto source) {
         Client client = new Client();
+        client.setId(source.getId());
         client.setName(source.getName());
         client.setLastName(source.getLastName());
         client.setNickName(source.getNickName());

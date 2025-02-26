@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import ru.sem.orderbook.order.model.Order;
 import ru.sem.orderbook.order.repository.OrderBookRepository;
 import ru.sem.orderbook.order.service.OrderBookService;
 import ru.sem.orderbook.orderMonitor.dto.PendOrderDto;
@@ -20,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class PendOrderService {
     private final OrderBookService orderBookService;
 
     @Scheduled(cron = "0 0 0 * * ?")
-//    @PostConstruct
+    @PostConstruct
     private void updatePendOrderTable() {
     List<PendOrder> pendOrders = orderBookRepository.findClientsOrders()
             .stream()
@@ -61,7 +61,7 @@ public class PendOrderService {
         return pendOrderRepository.findById(Long.valueOf(id))
                 .orElseThrow(NoSuchElementException::new);
     }
- //   @PostConstruct
+  //  @PostConstruct
     @Scheduled(cron = "0 0 1 * * ?")
     private void autoSetReasonPendOrder() {
         long startTime = System.currentTimeMillis();
@@ -72,7 +72,7 @@ public class PendOrderService {
             Integer oldCount = orderBookService
                     .getPartCount(order.getArticle(),
                             order.getBrand(),
-                            orderBookService.dateBuilder(order.getInputData().atStartOfDay().withSecond(20)));
+                            orderBookService.dateBuilder(order.getInputData().withSecond(20)));
             Integer newCount = orderBookService.getPartCount(order.getArticle(), order.getBrand(),
                     orderBookService.dateBuilder(LocalDateTime.now()));
             countCheckOrders++;

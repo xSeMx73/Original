@@ -22,7 +22,7 @@ public class SenderForReturn {
 
 
  //   @PostConstruct
-    @Scheduled(cron = "0 0 12 * * ?")
+ //   @Scheduled(cron = "0 0 12 * * ?")
     public void scheduleSender() {
         List<PendOrder> pendOrders = pendOrderRepository.findAllWhereReasonIsNull();
         pendOrders = pendOrders.stream().filter(p -> LocalDate.now()

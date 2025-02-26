@@ -10,7 +10,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.sem.clientbase.client.dto.ClientResponseDto;
+
+
 
 import java.nio.charset.StandardCharsets;
 
